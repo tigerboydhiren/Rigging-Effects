@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: Drawer1.ma
-//Last modified: Thu, Aug 27, 2015 01:07:04 PM
+//Last modified: Thu, Aug 27, 2015 01:18:32 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -643,15 +643,15 @@ createNode mentalrayOptions -s -n "miDefaultOptions";
 createNode mentalrayFramebuffer -s -n "miDefaultFramebuffer";
 	rename -uid "881B5832-468F-E857-5FB7-DC8FF364AE7C";
 createNode lightLinker -s -n "lightLinker1";
-	rename -uid "55EC0F9C-4071-236B-1598-95B6CC3CF202";
+	rename -uid "9188FA04-4B68-5D3F-FDB2-50A1E21C421F";
 	setAttr -s 2 ".lnk";
 	setAttr -s 2 ".slnk";
 createNode displayLayerManager -n "layerManager";
-	rename -uid "92D87C0E-44F3-B57F-962A-968C6651749D";
+	rename -uid "2564D857-48F5-ABCB-F261-D9B0465C9287";
 createNode displayLayer -n "defaultLayer";
 	rename -uid "0F4BD0AA-4030-68D3-E761-DFA665740E75";
 createNode renderLayerManager -n "renderLayerManager";
-	rename -uid "4A3E2EFF-4746-A386-696F-ACAA861C85E3";
+	rename -uid "6C0A2685-4731-A37D-83FE-80B021E22E3D";
 createNode renderLayer -n "defaultRenderLayer";
 	rename -uid "691B0AE1-4BAB-9CB8-6957-A2B16778284A";
 	setAttr ".g" yes;
