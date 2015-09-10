@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: Monoped.ma
-//Last modified: Thu, Sep 10, 2015 11:09:37 AM
+//Last modified: Thu, Sep 10, 2015 11:19:28 AM
 //Codeset: 1252
 requires maya "2016";
 currentUnit -l centimeter -a degree -t film;
