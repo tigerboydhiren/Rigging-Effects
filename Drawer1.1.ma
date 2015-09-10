@@ -1,6 +1,6 @@
 //Maya ASCII 2016 scene
 //Name: Drawer1.1.ma
-//Last modified: Tue, Sep 01, 2015 12:19:30 PM
+//Last modified: Tue, Sep 01, 2015 12:41:25 PM
 //Codeset: 1252
 requires maya "2016";
 requires -nodeType "mentalrayFramebuffer" -nodeType "mentalrayOptions" -nodeType "mentalrayGlobals"
@@ -90,7 +90,7 @@ createNode mesh -n "ChesterDrawerShape" -p "ChesterDrawer";
 createNode transform -n "Door" -p "ChesterDrawer";
 	rename -uid "8E90F9FF-4ADD-AF04-73BD-039116E24EE1";
 	setAttr ".t" -type "double3" 0.34774628165124272 -0.0040778922376822901 0.83103581663939863 ;
-	setAttr ".r" -type "double3" -180.02221403818373 52.509033794847674 -180.68207444680732 ;
+	setAttr ".r" -type "double3" -180.02221403818373 176.65966708691681 -180.68207444680732 ;
 	setAttr -l on ".rx";
 	setAttr -l on ".rz";
 	setAttr ".s" -type "double3" 0.43960985199163083 0.95100415175926978 0.049356139208677152 ;
@@ -1217,6 +1217,12 @@ createNode polyTweak -n "polyTweak13";
 		 0.048958782 0 0 0.048958782 0 0 0.048958782 0 0 0.048958782 0 0 0.048958782 0 -2.2218125e-018
 		 0.048958782 0 -2.2218125e-018 0.048958782 0 0 0.048958782 0 0 0.048958782 0 0 0.048958782
 		 0;
+createNode nodeGraphEditorInfo -n "hyperShadePrimaryNodeEditorSavedTabsInfo";
+	rename -uid "1E3ECF26-4963-6A9A-D289-589496DFD982";
+	setAttr ".pee" yes;
+	setAttr ".tgi[0].tn" -type "string" "Untitled_1";
+	setAttr ".tgi[0].vl" -type "double2" -73.809520876596963 -391.6666511032322 ;
+	setAttr ".tgi[0].vh" -type "double2" 72.619044733426037 409.52379325079607 ;
 select -ne :time1;
 	setAttr ".o" 1;
 	setAttr ".unw" 1;
