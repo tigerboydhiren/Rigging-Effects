@@ -1,0 +1,2809 @@
+//    Auto Rig for Human Characters
+//    v 0.2    27/12/2005
+
+// Copyright 2005 Shane Brouwer
+
+//  email shane@mirandow.com
+//
+//
+// Use of this script in a commercial environment without consent
+// is a breach of copyright. 
+//
+//
+// INSTRUCTIONS
+// 
+// 1. In Maya 6.0 or later, open the script editor,
+// 2. File > Open Script, then browse and select this script.
+// 3. Script > Execute.
+// 4. This should run the auto rigging procedure. Any problems, email me.
+
+
+
+if (`window -exists autoRig`) 
+  deleteUI autoRig; 
+
+window -rtf on -title "Shane's Auto Rigger" autoRig; 
+columnLayout;
+	text -label "Welcome to Shane Brouwer's";
+	text -label "   Rig Creation System    ";
+	text -label "";
+	text -label "Contact : shane@mirandow.com";
+	text -label "";
+	separator -w 200;
+	text -label "";
+	button -w 200 -label " Auto Rig " -command "createPositionLocators"   createLocatorsForPositions;
+	text -label "";
+	button -w 200 -label " Create Facial Rig Control " -command "createFacialRig" facialRigButton;
+	text -label "";
+	text -label "About This Script";
+	text -label "This script uses the Inverse Foot Setup";
+	text -label "and Realistic Spine Setupas well as other ";
+	text -label "techniques as taught by Vincent Rossini";
+	text -label "at Enmore Design Centre 2004/2005";
+	text -label "";
+	text -label "Copyright 2006, Shane Brouwer";
+	text -label "";
+
+//attrFieldSliderGrp -label "Spine Scale" -min 0 -max 20 -attribute neckTipLocator.sx;
+
+showWindow autoRig;
+
+
+proc createPositionLocators()
+{
+
+//creating the positions for each joint. Joints that
+//can be mirrored will be grouped.
+
+//root Joint
+CreateLocator;
+	rename "locator1" "rootJointLocator";
+	setAttr rootJointLocator.ty 22;
+	setAttr rootJointLocator.tz -1.2;
+
+//Left Hip Joint
+CreateLocator;
+	setAttr locator1.tx 3;
+	setAttr locator1.ty 20;
+	setAttr locator1.tz -1.2;
+	rename "locator1" "leftHipLocator";
+
+//Left Knee Joint
+CreateLocator;
+	setAttr locator1.tx 3;
+	setAttr locator1.ty 11.5;
+	setAttr locator1.tz -1.2;
+	rename "locator1" "leftKneeLocator";
+
+//Left Ankle Joint
+CreateLocator;
+	setAttr locator1.tx 3;
+	setAttr locator1.ty 2;
+	setAttr locator1.tz -1.2;
+	rename "locator1" "leftAnkleLocator";
+
+//Heel wrestling fans will know this as THE BAD GUY
+CreateLocator;
+	setAttr locator1.tx 3;
+	setAttr locator1.ty 0.1;
+	setAttr locator1.tz -3.2;
+	rename "locator1" "leftHeelLocator";
+
+CreateLocator;
+	setAttr locator1.tx 3;
+	setAttr locator1.ty 0.1;
+	setAttr locator1.tz 1;
+	rename "locator1" "leftBallLocator";
+
+CreateLocator;
+	setAttr locator1.tx 3;
+	setAttr locator1.ty 0.1;
+	setAttr locator1.tz 2.6;
+	rename "locator1" "leftToeLocator";
+
+//Spinal Column Locators
+
+CreateLocator;
+	setAttr locator1.tx 0;
+	setAttr locator1.ty 22.8;
+	setAttr locator1.tz -1.2;
+	rename "locator1" "backLocator1";
+
+CreateLocator;
+	setAttr locator1.tx 0;
+	setAttr locator1.ty 35.8;
+	setAttr locator1.tz -1.2;
+	rename "locator1" "backLocator7";
+
+//Neck
+
+CreateLocator;
+	setAttr locator1.tx 0;
+	setAttr locator1.ty 37;
+	setAttr locator1.tz -1.2;
+	rename "locator1" "neckLocator";
+
+CreateLocator;
+	setAttr locator1.tx 0;
+	setAttr locator1.ty 45;
+	setAttr locator1.tz -1.2;
+	rename "locator1" "neckTipLocator";
+
+//Arm locators
+CreateLocator;
+	setAttr locator1.tx 2.3;
+	setAttr locator1.ty 35.7;
+	setAttr locator1.tz 0;
+	rename "locator1" "leftCollarBoneLocator";
+
+CreateLocator;
+	setAttr locator1.tx 5;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftShoulderLocator";
+
+CreateLocator;
+	setAttr locator1.tx 10;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftElbowLocator";
+
+CreateLocator;
+	setAttr locator1.tx 15;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftWristLocator";
+
+CreateLocator;
+	setAttr locator1.tx 15.25;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftHandLocator";
+
+CreateLocator;
+	setAttr locator1.tx 16;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftPalmLocator";
+
+CreateLocator;
+	setAttr locator1.tx 16.5;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftMiddleKnuckleLocator";
+
+CreateLocator;
+	setAttr locator1.tx 17.1;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftMiddle1Locator";
+
+CreateLocator;
+	setAttr locator1.tx 17.6;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftMiddle2Locator";
+
+CreateLocator;
+	setAttr locator1.tx 18.2;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -0.7;
+	rename "locator1" "leftMiddleTipLocator";
+
+//Index Finger
+
+CreateLocator;
+	setAttr locator1.tx 16.5;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 0.1;
+	rename "locator1" "leftIndexKnuckleLocator";
+
+CreateLocator;
+	setAttr locator1.tx 17;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 0.1;
+	rename "locator1" "leftIndex1Locator";
+
+CreateLocator;
+	setAttr locator1.tx 17.5;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 0.1;
+	rename "locator1" "leftIndex2Locator";
+
+CreateLocator;
+	setAttr locator1.tx 18;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 0.1;
+	rename "locator1" "leftIndexTipLocator";
+
+
+//Ring Finger
+CreateLocator;
+	setAttr locator1.tx 16.5;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -1.4;
+	rename "locator1" "leftRingKnuckleLocator";
+
+CreateLocator;
+	setAttr locator1.tx 17;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -1.4;
+	rename "locator1" "leftRing1Locator";
+
+CreateLocator;
+	setAttr locator1.tx 17.5;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -1.4;
+	rename "locator1" "leftRing2Locator";
+
+CreateLocator;
+	setAttr locator1.tx 18;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -1.4;
+	rename "locator1" "leftRingTipLocator";
+
+
+//Pinky Finger, includes extra joint for cupping hand
+CreateLocator;
+	setAttr locator1.tx 15.6;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -1.6;
+	rename "locator1" "leftPinkyCupLocator";
+
+CreateLocator;
+	setAttr locator1.tx 16.35;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -2;
+	rename "locator1" "leftPinkyKnuckleLocator";
+
+CreateLocator;
+	setAttr locator1.tx 16.8;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -2;
+	rename "locator1" "leftPinky1Locator";
+
+CreateLocator;
+	setAttr locator1.tx 17.3;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -2;
+	rename "locator1" "leftPinky2Locator";
+
+CreateLocator;
+	setAttr locator1.tx 17.8;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz -2;
+	rename "locator1" "leftPinkyTipLocator";
+
+
+//The Thumb
+CreateLocator;
+	setAttr locator1.tx 15.5;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 0.3;
+	rename "locator1" "leftThumbKnuckleLocator";
+
+CreateLocator;
+	setAttr locator1.tx 15.8;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 0.8;
+	rename "locator1" "leftThumb1Locator";
+
+CreateLocator;
+	setAttr locator1.tx 16.4;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 1;
+	rename "locator1" "leftThumb2Locator";
+
+CreateLocator;
+	setAttr locator1.tx 17;
+	setAttr locator1.ty 33.5;
+	setAttr locator1.tz 1;
+	rename "locator1" "leftThumbTipLocator";
+
+select -cl  ;
+select -r leftHandLocator leftPalmLocator leftMiddleKnuckleLocator leftMiddle1Locator  leftMiddle2Locator leftMiddleTipLocator leftIndexKnuckleLocator leftIndex1Locator  leftIndex2Locator leftIndexTipLocator leftRingKnuckleLocator leftRing1Locator  leftRing2Locator leftRingTipLocator leftPinkyCupLocator leftPinkyKnuckleLocator  leftPinky1Locator leftPinky2Locator leftPinkyTipLocator leftThumbKnuckleLocator  leftThumb1Locator leftThumb2Locator leftThumbTipLocator ;
+scale -r 0.224145 0.224145 0.224145 ;
+
+select -cl  ;
+select -r rootJointLocator leftHeelLocator leftHipLocator leftKneeLocator   leftAnkleLocator leftBallLocator leftToeLocator backLocator1 backLocator7 neckLocator   neckTipLocator leftCollarBoneLocator leftShoulderLocator leftElbowLocator   leftWristLocator leftHandLocator leftPalmLocator leftMiddleKnuckleLocator   leftMiddle1Locator leftMiddle2Locator leftMiddleTipLocator leftIndexKnuckleLocator   leftIndex1Locator leftIndex2Locator leftIndexTipLocator leftRingKnuckleLocator   leftRing1Locator leftRing2Locator leftRingTipLocator leftPinkyCupLocator   leftPinkyKnuckleLocator leftPinky1Locator leftPinky2Locator leftPinkyTipLocator   leftThumbKnuckleLocator leftThumb1Locator leftThumb2Locator leftThumbTipLocator ;
+group; xform -os -piv 0 0 0;
+rename "group1" "locatorGRP";
+
+//kill window 1
+  deleteUI autoRig; 
+adjustLocators;
+
+}
+
+setAttr "persp.translateX" 83;
+setAttr "persp.translateY" 63;
+setAttr "persp.translateZ" 55;
+setAttr "persp.rotateX" -20;
+setAttr "persp.rotateY" 45;
+
+proc adjustLocators()
+{
+if (`window -exists autoRig_03`) 
+ 	 deleteUI autoRig_03; 
+		window -rtf on -title "Shane's Auto Rigger" autoRig_03; 
+		columnLayout;
+
+	text -label "Move the locators around as needed.";
+	text -label "It's best to try and keep things in a straight";
+	text -label "line. The locator name indicates which";
+	text -label "joint will take a position there.";
+	text -label "";
+	
+	button -w 200 -label " Add Joints " -command "addJointsproc"  addJointsButton;
+
+		showWindow autoRig_03;
+}
+
+
+proc addJointsproc()
+{
+curve -d 1 -p `getAttr backLocator1.tx` `getAttr backLocator1.ty` `getAttr  backLocator1.tz` -p `getAttr backLocator7.tx` `getAttr backLocator7.ty` `getAttr  backLocator7.tz` -k 0 -k 1 ;
+curve -d 1 -p `getAttr leftElbowLocator.tx` `getAttr leftElbowLocator.ty` `getAttr  leftElbowLocator.tz` -p `getAttr leftWristLocator.tx` `getAttr leftWristLocator.ty`  `getAttr leftWristLocator.tz` -k 0 -k 1 ;
+	rename "curve1" "spineCurve";
+	rename "curve2" "forearmCurve";
+
+plotEquidistantLocatorsOnCurve( "spineCurve", 7 );
+plotEquidistantLocatorsOnCurve( "forearmCurve", 4 );
+
+delete locator1;
+delete locator7;
+delete locator8;
+delete locator11;
+
+rename "locator2" "backLocator2_sub";
+rename "locator3" "backLocator3_sub";
+rename "locator4" "backLocator4_sub";
+rename "locator5" "backLocator5_sub";
+rename "locator6" "backLocator6_sub";
+
+rename "locator9" "forearmLocator1_sub";
+rename "locator10" "forearmLocator2_sub";
+
+	CreateLocator;
+		rename "locator1" "backLocator2";
+		setAttr backLocator2.tx `getAttr backLocator2_subShape.localPositionX`;
+		setAttr backLocator2.ty `getAttr backLocator2_subShape.localPositionY`;
+		setAttr backLocator2.tz `getAttr backLocator2_subShape.localPositionZ`;
+	
+	CreateLocator;
+		rename "locator1" "backLocator3";
+		setAttr backLocator3.tx `getAttr backLocator3_subShape.localPositionX`;
+		setAttr backLocator3.ty `getAttr backLocator3_subShape.localPositionY`;
+		setAttr backLocator3.tz `getAttr backLocator3_subShape.localPositionZ`;
+
+	CreateLocator;
+		rename "locator1" "backLocator4";
+		setAttr backLocator4.tx `getAttr backLocator4_subShape.localPositionX`;
+		setAttr backLocator4.ty `getAttr backLocator4_subShape.localPositionY`;
+		setAttr backLocator4.tz `getAttr backLocator4_subShape.localPositionZ`;
+
+	CreateLocator;
+		rename "locator1" "backLocator5";
+		setAttr backLocator5.tx `getAttr backLocator5_subShape.localPositionX`;
+		setAttr backLocator5.ty `getAttr backLocator5_subShape.localPositionY`;
+		setAttr backLocator5.tz `getAttr backLocator5_subShape.localPositionZ`;
+
+	CreateLocator;
+		rename "locator1" "backLocator6";
+		setAttr backLocator6.tx `getAttr backLocator6_subShape.localPositionX`;
+		setAttr backLocator6.ty `getAttr backLocator6_subShape.localPositionY`;
+		setAttr backLocator6.tz `getAttr backLocator6_subShape.localPositionZ`;
+
+	CreateLocator;
+		rename "locator1" "leftForearmLocator1";
+		setAttr leftForearmLocator1.tx `getAttr  forearmLocator1_subShape.localPositionX`;
+		setAttr leftForearmLocator1.ty `getAttr  forearmLocator1_subShape.localPositionY`;
+		setAttr leftForearmLocator1.tz `getAttr  forearmLocator1_subShape.localPositionZ`;
+
+	CreateLocator;
+		rename "locator1" "leftForearmLocator2";
+		setAttr leftForearmLocator2.tx `getAttr  forearmLocator2_subShape.localPositionX`;
+		setAttr leftForearmLocator2.ty `getAttr  forearmLocator2_subShape.localPositionY`;
+		setAttr leftForearmLocator2.tz `getAttr  forearmLocator2_subShape.localPositionZ`;
+
+
+select -r backLocator2_sub backLocator3_sub backLocator4_sub backLocator5_sub  backLocator6_sub forearmLocator1_sub forearmLocator2_sub ;
+delete;
+select -r spineCurve forearmCurve ;
+delete;
+
+select -cl  ;
+select -r backLocator2 backLocator3 backLocator4 backLocator5 backLocator6  leftForearmLocator1 leftForearmLocator2 ;
+select -add locatorGRP ;
+parent;
+
+//we are now going to duplicate the limbs to the other side
+
+select -cl  ;
+select -r leftHeelLocator leftHipLocator leftKneeLocator leftAnkleLocator leftBallLocator  leftToeLocator leftCollarBoneLocator leftShoulderLocator leftElbowLocator  leftWristLocator leftHandLocator leftPalmLocator leftMiddleKnuckleLocator  leftMiddle1Locator leftMiddle2Locator leftMiddleTipLocator leftIndexKnuckleLocator  leftIndex1Locator leftIndex2Locator leftIndexTipLocator leftRingKnuckleLocator  leftRing1Locator leftRing2Locator leftRingTipLocator leftPinkyCupLocator  leftPinkyKnuckleLocator leftPinky1Locator leftPinky2Locator leftPinkyTipLocator  leftThumbKnuckleLocator leftThumb1Locator leftThumb2Locator leftThumbTipLocator  leftForearmLocator1 leftForearmLocator2 ;
+
+duplicate;
+
+	string $sel[] = `ls -sl`;
+	string $current;
+		for ($current in $sel)
+		{
+			float $fMinor = (-`getAttr ($current + ".tx")`);
+			setAttr ($current + ".tx") $fMinor ;
+
+			string $afterTokenize[];
+			tokenize($current, "t", $afterTokenize);
+			rename $current ("right" + $afterTokenize[1] + "t" +  $afterTokenize[2]);
+		}
+
+	string $sel[] = `ls -sl`;
+	string $current;
+		for ($current in $sel)
+			{
+			string $afterTokenize1[];
+			tokenize($current, "1", $afterTokenize1);
+			rename $current ($afterTokenize1[0]);
+			}
+
+rename "rightWristLoca" "rightWristLocator" ;
+rename "rightMiddle" "rightMiddle1Locator" ;
+rename "rightIndex" "rightIndex1Locator" ;
+rename "rightRing" "rightRingLocator" ;
+rename "rightPinky" "rightPinky1Locator" ;
+rename "rightThumb" "rightThumb1Locator" ;
+rename "rightForearmLocator3" "rightForearmLocator1";
+rename "rightForearmLocator4" "rightForearmLocator2";
+
+addingInTheJoints;
+
+if (`window -exists autoRig_04`) 
+ 	 deleteUI autoRig_04; 
+		window -rtf on -title "Shane's Auto Rigger" autoRig_04; 
+		columnLayout;
+  		deleteUI autoRig_03; 
+
+		text -label "If you only want the bone structure  ";
+		text -label "and nothing else quit here.";
+		text -label "Otherwise continue on to create curves";
+		text -label "";
+
+		button -w 200 -label " Create Curves " - command "createCurvesAndIK" curvesAndIKButton;
+
+		showWindow autoRig_04;
+}
+
+
+
+
+
+
+
+
+proc connectTheBones()
+{
+select -r leftToe ;
+select -tgl leftBall ;
+	parent;
+
+select -r leftBall ;
+select -tgl leftAnkle ;
+	parent;
+
+select -r leftAnkle ;
+select -tgl leftKnee ;
+	parent;
+
+select -r leftKnee ;
+select -tgl leftHip ;
+	parent;
+
+select -r leftHip ;
+select -r rightToe ;
+select -tgl rightBall ;
+	parent;
+
+select -r rightBall ;
+select -tgl rightAnkle ;
+	parent;
+
+select -r rightAnkle ;
+select -tgl rightKnee ;
+	parent;
+
+select -r rightKnee ;
+select -tgl rightHip ;
+	parent;
+
+select -r rightHip ;
+select -tgl rootJoint ;
+	parent;
+
+select -r leftHip ;
+select -tgl rootJoint ;
+	parent;
+
+select -r back ;
+select -tgl rootJoint ;
+	parent;
+
+select -r back2 ;
+select -tgl back ;
+	parent;
+
+select -r back3 ;
+select -tgl back2 ;
+	parent;
+
+select -r back4 ;
+select -tgl back3 ;
+	parent;
+
+select -r back5 ;
+select -tgl back4 ;
+	parent;
+
+select -r back6 ;
+select -tgl back5 ;
+	parent;
+
+select -r back1 ;
+select -tgl back6 ;
+	parent;
+
+select -r neck ;
+select -r leftPinkyTip ;
+select -tgl leftPinky2 ;
+	parent;
+
+select -r leftPinky2 ;
+select -tgl leftPinky1 ;
+	parent;
+
+select -r leftPinky1 ;
+select -tgl leftPinkyKnuckle ;
+	parent;
+
+select -r leftRingTip ;
+select -tgl leftRing2 ;
+	parent;
+
+select -r leftRing2 ;
+select -tgl leftRing1 ;
+	parent;
+
+select -r leftRing1 ;
+select -tgl leftRingKnuckle ;
+	parent;
+
+select -r leftMiddleTip ;
+select -tgl leftMiddle2 ;
+	parent;
+
+select -r leftMiddle2 ;
+select -tgl leftMiddle1 ;
+	parent;
+
+select -r leftMiddle1 ;
+select -tgl leftMiddleKnuckle ;
+	parent;
+
+select -r leftIndexTip ;
+select -tgl leftIndex2 ;
+	parent;
+
+select -r leftIndex2 ;
+select -tgl leftIndex1 ;
+	parent;
+
+select -r leftIndex1 ;
+select -tgl leftIndexKnuckle ;
+	parent;
+
+select -r leftRingKnuckle ;
+select -tgl leftPalm ;
+	parent;
+
+select -r leftMiddleKnuckle ;
+select -tgl leftPalm ;
+	parent;
+
+select -r leftIndexKnuckle ;
+select -tgl leftPalm ;
+	parent;
+
+select -r leftPinkyKnuckle ;
+select -tgl leftPinkyCup ;
+	parent;
+
+select -r leftPinkyCup ;
+select -tgl leftHand ;
+	parent;
+
+select -r leftPalm ;
+select -tgl leftHand ;
+	parent;
+
+select -r leftThumbTip ;
+select -tgl leftThumb2 ;
+	parent;
+
+select -r leftThumb2 ;
+select -tgl leftThumb1 ;
+	parent;
+
+select -r leftThumb1 ;
+select -tgl leftThumbKnuckle ;
+	parent;
+
+select -r leftThumbKnuckle ;
+select -tgl leftHand ;
+	parent;
+
+select -r leftHand ;
+select -tgl leftWrist ;
+	parent;
+
+select -r leftWrist ;
+select -tgl leftForearm1 ;
+	parent;
+
+select -r leftForearm1 ;
+select -tgl leftForearm ;
+	parent;
+select -r leftForearm ;
+select -tgl leftElbow ;
+	parent;
+
+select -r leftElbow ;
+select -tgl leftShoulder ;
+	parent;
+
+select -r leftShoulder ;
+select -tgl leftCollarBone ;
+	parent;
+
+select -cl  ;
+select -r leftCollarBone ;
+select -tgl back1 ;
+	parent;
+
+select -r leftCollarBone ;
+select -cl  ;
+select -r rightPinkyTip ;
+select -tgl rightPinky2 ;
+	parent;
+
+select -r rightPinky2 ;
+select -tgl rightPinky1 ;
+	parent;
+
+select -r rightPinky1 ;
+select -tgl rightPinkyKnuckle ;
+	parent;
+
+select -r rightRingTip ;
+select -tgl rightRing2 ;
+	parent;
+
+select -r rightRing2 ;
+select -tgl rightRing ;
+	parent;
+
+select -r rightRing ;
+select -tgl rightRingKnuckle ;
+	parent;
+
+select -r rightMiddleTip ;
+select -tgl rightMiddle2 ;
+	parent;
+
+select -r rightMiddle2 ;
+select -tgl rightMiddle1 ;
+	parent;
+
+select -r rightMiddle1 ;
+select -tgl rightMiddleKnuckle ;
+	parent;
+
+select -r rightIndex2 ;
+select -r rightIndex2 ;
+select -r rightIndexTip ;
+select -tgl rightIndex2 ;
+	parent;
+
+select -r rightIndex2 ;
+select -tgl rightIndex1 ;
+	parent;
+
+select -r rightIndex1 ;
+select -tgl rightIndexKnuckle ;
+	parent;
+
+select -r rightIndexKnuckle ;
+select -tgl rightPalm ;
+	parent;
+
+select -cl  ;
+select -r rightMiddleKnuckle ;
+select -tgl rightPalm ;
+	parent;
+
+select -r rightRingKnuckle ;
+select -tgl rightPalm ;
+	parent;
+
+select -r rightPinkyKnuckle ;
+select -tgl rightPinkyCup ;
+	parent;
+
+select -r rightPinkyCup ;
+select -tgl rightHand ;
+	parent;
+
+select -cl  ;
+select -r rightThumbTip ;
+select -tgl rightThumb2 ;
+	parent;
+	
+select -r rightThumb2 ;
+select -tgl rightThumb1 ;
+	parent;
+
+select -r rightThumb1 ;
+select -tgl rightThumbKnuckle ;
+	parent;
+
+select -r rightThumbKnuckle ;
+select -tgl rightHand ;
+	parent;
+
+select -r rightPalm ;
+select -tgl rightHand ;
+	parent;
+
+select -r rightHand ;
+select -tgl rightWrist ;
+parent;
+
+select -cl  ;
+select -r rightWrist ;
+select -tgl rightForearm1 ;
+	parent;
+
+select -r rightForearm1 ;
+select -tgl rightForearm ;
+	parent;
+
+select -cl  ;
+select -r rightForearm ;
+select -tgl rightElbow ;
+	parent;
+
+select -r rightElbow ;
+select -tgl rightShoulder ;
+	parent;
+
+select -r rightShoulder ;
+select -tgl rightCollarBone ;
+	parent;
+
+select -r rightCollarBone ;
+select -tgl back1 ;
+	parent;
+
+select -r neck ;
+select -tgl back1 ;
+	parent;
+
+select -r neckTip ;
+select -tgl neck ;
+	parent;
+
+}
+
+proc addingInTheJoints()
+{
+select -cl  ;
+select -r rootJointLocator leftHipLocator leftKneeLocator leftAnkleLocator leftBallLocator leftToeLocator backLocator1 backLocator7 neckLocator neckTipLocator leftCollarBoneLocator leftShoulderLocator leftElbowLocator leftWristLocator leftHandLocator leftPalmLocator leftMiddleKnuckleLocator leftMiddle1Locator leftMiddle2Locator leftMiddleTipLocator leftIndexKnuckleLocator leftIndex1Locator leftIndex2Locator leftIndexTipLocator leftRingKnuckleLocator leftRing1Locator leftRing2Locator leftRingTipLocator leftPinkyCupLocator leftPinkyKnuckleLocator leftPinky1Locator leftPinky2Locator leftPinkyTipLocator leftThumbKnuckleLocator leftThumb1Locator leftThumb2Locator leftThumbTipLocator backLocator2 backLocator3 backLocator4 backLocator5 backLocator6 leftForearmLocator1 leftForearmLocator2 rightHipLocator rightKneeLocator rightAnkleLocator rightBallLocator rightToeLocator rightCollarBoneLocator rightShoulderLocator rightElbowLocator rightWristLocator rightHandLocator rightPalmLocator rightMiddleKnuckleLocator rightMiddle1Locator rightMiddle2Locator rightMiddleTipLocator rightIndexKnuckleLocator rightIndex1Locator rightIndex2Locator rightIndexTipLocator rightRingKnuckleLocator rightRingLocator rightRing2Locator rightRingTipLocator rightPinkyCupLocator rightPinkyKnuckleLocator rightPinky1Locator rightPinky2Locator rightPinkyTipLocator rightThumbKnuckleLocator rightThumb1Locator rightThumb2Locator rightThumbTipLocator rightForearmLocator1 rightForearmLocator2 ;
+	string $sel2[] = `ls -sl`;
+	string $current2;
+		for ($current2 in $sel2)
+		{
+			select -d;
+			joint -p `getAttr ($current2 + ".tx")` `getAttr ($current2 + ".ty")` `getAttr ($current2 + ".tz")` ;
+
+			string $afterTokenize2[];
+			tokenize($current2, "L", $afterTokenize2);
+			rename "joint1" ($afterTokenize2[0]);
+		}
+//Connecting the joints together to form BONES
+connectTheBones;
+setAttr rightKnee.preferredAngleX 15;
+setAttr leftKnee.preferredAngleX 15;
+setAttr rightElbow.preferredAngleY 15;
+setAttr leftElbow.preferredAngleY -15;
+rename "rightRing" "rightRing1";
+
+//Setting Joint names for display in viewport
+setAttr rootJoint.type 1;
+setAttr back.type 18;
+setAttr -type "string" back.otherType "Lower Back";
+setAttr back4.type 18;
+setAttr -type "string" back4.otherType "Mid Back";
+setAttr back1.type 18;
+setAttr -type "string" back1.otherType "Upper Back";
+setAttr neck.type 7;
+setAttr leftCollarBone.type 9;
+setAttr leftCollarBone.side 1;
+setAttr leftShoulder.side 1;
+setAttr leftShoulder.type 10;
+setAttr leftElbow.side 1;
+setAttr leftElbow.type 11;
+setAttr leftWrist.side 1;
+setAttr leftWrist.type 18;
+setAttr -type "string" leftWrist.otherType "Wrist";
+setAttr leftHip.side 1;
+setAttr leftHip.type 2;
+setAttr leftKnee.side 1;
+setAttr leftKnee.type 3;
+setAttr leftAnkle.side 1;
+setAttr leftAnkle.type 18;
+setAttr -type "string" leftAnkle.otherType "Ankle";
+setAttr leftBall.type 18;
+setAttr -type "string" leftBall.otherType "Ball";
+setAttr leftBall.side 1;
+setAttr rightHip.side 2;
+setAttr rightHip.type 2;
+setAttr rightKnee.side 2;
+setAttr rightKnee.type 3;
+setAttr rightAnkle.side 2;
+setAttr rightAnkle.type 18;
+setAttr -type "string" rightAnkle.otherType "Ankle";
+setAttr rightBall.side 2;
+setAttr rightBall.type 18;
+setAttr -type "string" rightBall.otherType "Ball";
+setAttr rightCollarBone.side 2;
+setAttr rightCollarBone.type 9;
+setAttr rightShoulder.side 2;
+setAttr rightShoulder.type 10;
+setAttr rightElbow.side 2;
+setAttr rightElbow.type 11;
+setAttr rightWrist.side 2;
+setAttr rightWrist.type 18;
+setAttr -type "string" rightWrist.otherType "Wrist";
+
+
+}
+
+// this section of code was written by someone else
+// found at http://www.ewertb.com/maya/mel/
+// it finds equidistant points on a curve
+
+proc float findParamAtDistance( string $curve, 
+                                string $arcLD, 
+                                float $distance, 
+                                float $epsilon )
+{
+  float $u = 0.0;
+  
+  float $min = `getAttr ( $curve + ".minValue" )`;
+  float $max = `getAttr ( $curve + ".maxValue" )`;
+
+  setAttr ( $arcLD + ".uParamValue" ) $max;
+  float $arcLength = `getAttr ( $arcLD + ".arcLength" )`;
+  
+  // Don't bother doing any work for the start or end of the curve.
+  //
+  if ( $distance <= 0.0 ) return 0.0;
+  if ( $distance >= $arcLength ) return $max;
+
+  // This is merely a diagnostic to measure the number of passes required to 
+  // find any particular point. You may be surprised that the number of 
+  // passes is typically quite low.
+  //
+  int $pass = 1;
+
+  while ( true )
+  {
+    $u = ( $min + $max ) / 2.0;
+    setAttr ( $arcLD + ".uParamValue" ) $u;
+    $arcLength = `getAttr ( $arcLD + ".arcLength" )`;
+    if ( abs( $arcLength - $distance ) < $epsilon ) break;
+    if ( $arcLength > $distance ) $max = $u;
+    else $min = $u;
+    $pass++;
+  }
+  
+  return $u;
+}
+
+proc string plotLocator( string $curve, float $uParam )
+{
+  float $p[3] = `pointOnCurve -pr $uParam -p $curve`;
+  string $locator[] = `spaceLocator -p $p[0] $p[1] $p[2]`;
+  
+  return $locator[0];
+}
+
+proc plotEquidistantLocatorsOnCurve( string $curve, int $count )
+{
+  // Even two is kind of silly, really.
+  //
+  if ( $count < 2 ) error( "Must plot at least two equidistant locators." );
+  
+  // Determine the U range for this curve.
+  //
+  float $maxU = `getAttr ( $curve + ".maxValue" )`;
+
+  // Create an arcLengthDimension node for the curve.
+  //
+  string $arcLD = `arcLengthDimension ( $curve + ".u[" + $maxU + "]" )`;
+
+  // Find the overall length of the curve.
+  //
+  float $arcLength = `getAttr ( $arcLD + ".arcLength" )`;
+  
+  // Span of each plot is ( $arcLength / ( $count - 1 ) )
+  //
+  float $span = $arcLength / ( $count - 1 );
+  
+  // First plot is at 0.0.
+  //
+  plotLocator( $curve, 0.0 );
+  
+  // Fill in the middle.
+  //
+  float $epsilon = 0.0001;
+  int $i;
+  for ( $i = 1; $i < ( $count - 1 ); $i++ )
+  {
+    float $distance = $span * $i;
+    float $uParam = findParamAtDistance( $curve, $arcLD, $distance, $epsilon );
+    plotLocator( $curve, $uParam );
+  }
+
+  // Final plot is at $maxU.
+  //
+  plotLocator( $curve, $maxU );
+  
+  // Delete the arcLengthDimensionNode (by its transform).
+  //
+  delete `listRelatives -fullPath -parent $arcLD`;
+}
+
+
+
+
+
+
+
+
+
+
+proc scaleTheRig()
+{
+if (`window -exists autoRig_02`) 
+  deleteUI autoRig_02; 
+window -rtf on -title "Shane's Auto Rigger" autoRig_02; 
+columnLayout;
+	text -label "Scale the rig to the approximate size \n of your character, don't   stress \n if it's not perfect. We'll fine tune \n it in later steps ";
+
+floatSliderGrp -cw3 50 50 150 -cat 1 left 10 -cat 2 left 0 -label "Scale" -min 0 -max 100   -v 1 -field true
+	-dc "setAttr locatorGRP.sx `floatSliderGrp -q -v skelScale`;setAttr locatorGRP.sy   `floatSliderGrp -q -v skelScale`;setAttr locatorGRP.sz `floatSliderGrp -q -v skelScale`"
+	-cc "setAttr locatorGRP.sx `floatSliderGrp -q -v skelScale`;setAttr locatorGRP.sy   `floatSliderGrp -q -v skelScale`;setAttr locatorGRP.sz `floatSliderGrp -q -v skelScale`"
+	skelScale;
+
+showWindow autoRig_02;
+}
+
+
+
+
+proc showOrHideJointNames()
+{
+select -r rootJoint rightHip rightKnee rightAnkle rightBall leftHip leftKnee leftAnkle leftBall back1 back4 back7 leftCollarBone leftShoulder leftElbow leftWrist rightCollarBone rightShoulder rightElbow rightWrist neck neckTip ;
+select -d neckTip ;
+
+	string $sel[] = `ls -sl`;
+	string $current;
+		for ($current in $sel)
+			{
+				if (`getAttr ($current + ".drawLabel")` == 1)
+				{
+				setAttr ($current + ".drawLabel") 0;
+				}
+				else if (`getAttr ($current + ".drawLabel")` == 0)
+				{
+				setAttr ($current + ".drawLabel") 1;
+				}				
+			}
+}
+
+
+proc createCurvesAndIK()
+{
+rename "back1" "back7";
+rename "back" "back1";
+
+//The Hand Part
+string $sLeft = "left";
+string $sRight = "right";
+
+//finger curve creation
+//pinky
+curve -d 3 -p -1.788003 11.428065 0 -p -1.916905 11.963043 0 -p -2.29712 12.722299 0 -p -2.55181 13.105006 0 -p -2.824081 13.504443 0 -p -2.989748 13.845666 0 -p -3.007117 14.036863 0 -p -2.914539 14.196256 0 -p -2.762849 14.275966 0 -p -2.599555 14.219724 0 -p -2.414647 14.035623 0 -p -2.231843 13.77739 1.02499e-005 -p -1.928719 13.292469 0.000345729 -p -1.532949 12.688732 0.0018976 -p -1.220226 12.28911 0.00424791 -p -1.160663 12.23252 0.00475798 -p -1.118971 12.224484 0.00496165 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 14 -k 14 ;
+rename "curve1" ($sLeft + "Pinky");
+
+//ring finger
+curve -d 3 -p -1.118971 12.224484 0.00496165 -p -1.103879 12.249849 0.00488432 -p -1.09157 12.417399 0.00408422 -p -1.149107 13.025554 0.00183033 -p -1.313559 13.771155 0.000422062 -p -1.459517 14.288885 5.47102e-005 -p -1.61265 14.916592 0 -p -1.601253 15.178706 0 -p -1.519235 15.274991 0 -p -1.346299 15.317443 0 -p -1.205317 15.303982 0 -p -1.065373 15.1411 0 -p -0.945264 14.811178 0 -p -0.722821 13.876864 0.000462133 -p -0.439218 12.890615 0.0029052 -p -0.343534 12.640437 0.00406932 -p -0.271343 12.479604 0.00498997 -p -0.233002 12.42378 0.00533796 -p -0.201739 12.407795 0.00544288 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 16 -k 16 ;
+rename "curve1" ($sLeft + "Ring");
+
+//middle finger
+curve -d 3 -p -0.201739 12.407795 0.00544288 -p -0.155838 12.443947 0.00522388 -p -0.116674 12.518648 0.00478244 -p 0.0378597 13.004913 0.00260024 -p 0.145712 13.592533 0.00110346 -p 0.219814 14.295823 0.000245403 -p 0.261275 14.813679 2.5857e-005 -p 0.324077 15.328284 0 -p 0.396371 15.593347 0 -p 0.484131 15.752978 0 -p 0.585972 15.834183 0 -p 0.722509 15.853871 0 -p 0.825903 15.836055 0 -p 0.93091 15.794906 0 -p 1.010721 15.708464 0 -p 1.077345 15.349815 0 -p 1.043901 14.842636 0 -p 0.919928 13.923671 0.000468068 -p 0.826697 13.18074 0.00181954 -p 0.77733 12.495898 0.00450964 -p 0.778426 12.356149 0.00533125 -p 0.813632 12.272746 0.00577886 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 19 -k 19 -k 19 ;
+rename "curve1" ($sLeft + "Middle");
+
+//index finger
+curve -d 3 -p 0.813632 12.272746 0.00577886 -p 0.917108 12.311362 0.00527292 -p 1.050292 12.419014 0.00434237 -p 1.255812 12.612986 0.00306879 -p 1.737459 13.175401 0.000984216 -p 2.292523 13.962102 4.12241e-005 -p 2.666188 14.462105 0 -p 2.829689 14.605046 0 -p 3.021251 14.637288 0 -p 3.162853 14.543227 0 -p 3.250988 14.418371 -6.3031e-005 -p 3.186325 14.134665 -0.000396928 -p 3.010616 13.828035 -0.000829573 -p 2.663609 13.31916 -0.00146434 -p 2.081835 12.438016 -0.00172535 -p 1.679444 11.734103 -0.0010389 -p 1.444989 11.245362 -0.000138478 -p 1.408407 11.084262 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 15 -k 15 ;
+rename "curve1" ($sLeft + "Index");
+
+//thumb
+curve -d 3 -p 1.408407 11.084262 0 -p 1.47728 10.832172 0 -p 1.611319 10.70437 0 -p 1.857692 10.614466 0 -p 2.125601 10.605787 0 -p 2.446705 10.693648 0 -p 2.818195 10.873406 0 -p 3.245483 11.10829 0 -p 3.804917 11.380515 0 -p 4.090081 11.470905 0 -p 4.28448 11.488921 0 -p 4.477694 11.438563 0 -p 4.569259 11.354996 0 -p 4.577469 11.123707 0 -p 4.396269 10.904909 0 -p 3.937313 10.60316 0 -p 3.46787 10.326084 0 -p 2.974742 9.993743 0 -p 2.492005 9.574902 0 -p 1.789571 8.916656 0 -p 1.31482 8.593929 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 18 -k 18 ;
+rename "curve1" ($sLeft + "Thumb");
+
+//palm curve
+curve -d 3 -p -1.788003 11.428065 0 -p -1.814449 10.853489 0 -p -1.843971 10.085921 0 -p -1.784927 9.480722 0 -p -1.504469 8.846002 0 -p -1.135446 8.49174 0 -p -0.663096 8.388413 0 -p -0.190746 8.358891 0 -p 0.591583 8.32937 0 -p 1.31482 8.593929 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 7 -k 7 ;
+rename "curve1" ($sLeft + "PalmCurve");
+
+//sets Left Hand Controls to correct position
+	select -cl  ;
+	select -r leftPinky leftRing leftMiddle leftIndex leftThumb leftPalmCurve ;
+	group; xform -os -piv 0 0 0;
+	rename "group1" "leftHandControls";
+	scale -r 0.378176 0.378176 0.378176 ;
+	rotate -r -os 0 -90 0 ;
+
+		setAttr leftHandControls.tx `getAttr leftWristLocator.tx`;
+		setAttr leftHandControls.ty `getAttr leftWristLocator.ty`;
+		setAttr leftHandControls.tz `getAttr leftWristLocator.tz`;
+
+	select -r leftHandControls ;
+	makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+
+//change side marker to right
+$sLeft = "right";
+//finger curve creation
+//pinky
+curve -d 3 -p -1.788003 11.428065 0 -p -1.916905 11.963043 0 -p -2.29712 12.722299 0 -p -2.55181 13.105006 0 -p -2.824081 13.504443 0 -p -2.989748 13.845666 0 -p -3.007117 14.036863 0 -p -2.914539 14.196256 0 -p -2.762849 14.275966 0 -p -2.599555 14.219724 0 -p -2.414647 14.035623 0 -p -2.231843 13.77739 1.02499e-005 -p -1.928719 13.292469 0.000345729 -p -1.532949 12.688732 0.0018976 -p -1.220226 12.28911 0.00424791 -p -1.160663 12.23252 0.00475798 -p -1.118971 12.224484 0.00496165 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 14 -k 14 ;
+rename "curve1" ($sLeft + "Pinky");
+
+//ring finger
+curve -d 3 -p -1.118971 12.224484 0.00496165 -p -1.103879 12.249849 0.00488432 -p -1.09157 12.417399 0.00408422 -p -1.149107 13.025554 0.00183033 -p -1.313559 13.771155 0.000422062 -p -1.459517 14.288885 5.47102e-005 -p -1.61265 14.916592 0 -p -1.601253 15.178706 0 -p -1.519235 15.274991 0 -p -1.346299 15.317443 0 -p -1.205317 15.303982 0 -p -1.065373 15.1411 0 -p -0.945264 14.811178 0 -p -0.722821 13.876864 0.000462133 -p -0.439218 12.890615 0.0029052 -p -0.343534 12.640437 0.00406932 -p -0.271343 12.479604 0.00498997 -p -0.233002 12.42378 0.00533796 -p -0.201739 12.407795 0.00544288 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 16 -k 16 ;
+rename "curve1" ($sLeft + "Ring");
+
+//middle finger
+curve -d 3 -p -0.201739 12.407795 0.00544288 -p -0.155838 12.443947 0.00522388 -p -0.116674 12.518648 0.00478244 -p 0.0378597 13.004913 0.00260024 -p 0.145712 13.592533 0.00110346 -p 0.219814 14.295823 0.000245403 -p 0.261275 14.813679 2.5857e-005 -p 0.324077 15.328284 0 -p 0.396371 15.593347 0 -p 0.484131 15.752978 0 -p 0.585972 15.834183 0 -p 0.722509 15.853871 0 -p 0.825903 15.836055 0 -p 0.93091 15.794906 0 -p 1.010721 15.708464 0 -p 1.077345 15.349815 0 -p 1.043901 14.842636 0 -p 0.919928 13.923671 0.000468068 -p 0.826697 13.18074 0.00181954 -p 0.77733 12.495898 0.00450964 -p 0.778426 12.356149 0.00533125 -p 0.813632 12.272746 0.00577886 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 19 -k 19 -k 19 ;
+rename "curve1" ($sLeft + "Middle");
+
+//index finger
+curve -d 3 -p 0.813632 12.272746 0.00577886 -p 0.917108 12.311362 0.00527292 -p 1.050292 12.419014 0.00434237 -p 1.255812 12.612986 0.00306879 -p 1.737459 13.175401 0.000984216 -p 2.292523 13.962102 4.12241e-005 -p 2.666188 14.462105 0 -p 2.829689 14.605046 0 -p 3.021251 14.637288 0 -p 3.162853 14.543227 0 -p 3.250988 14.418371 -6.3031e-005 -p 3.186325 14.134665 -0.000396928 -p 3.010616 13.828035 -0.000829573 -p 2.663609 13.31916 -0.00146434 -p 2.081835 12.438016 -0.00172535 -p 1.679444 11.734103 -0.0010389 -p 1.444989 11.245362 -0.000138478 -p 1.408407 11.084262 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 15 -k 15 ;
+rename "curve1" ($sLeft + "Index");
+
+//thumb
+curve -d 3 -p 1.408407 11.084262 0 -p 1.47728 10.832172 0 -p 1.611319 10.70437 0 -p 1.857692 10.614466 0 -p 2.125601 10.605787 0 -p 2.446705 10.693648 0 -p 2.818195 10.873406 0 -p 3.245483 11.10829 0 -p 3.804917 11.380515 0 -p 4.090081 11.470905 0 -p 4.28448 11.488921 0 -p 4.477694 11.438563 0 -p 4.569259 11.354996 0 -p 4.577469 11.123707 0 -p 4.396269 10.904909 0 -p 3.937313 10.60316 0 -p 3.46787 10.326084 0 -p 2.974742 9.993743 0 -p 2.492005 9.574902 0 -p 1.789571 8.916656 0 -p 1.31482 8.593929 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 18 -k 18 ;
+rename "curve1" ($sLeft + "Thumb");
+
+//palm curve
+curve -d 3 -p -1.788003 11.428065 0 -p -1.814449 10.853489 0 -p -1.843971 10.085921 0 -p -1.784927 9.480722 0 -p -1.504469 8.846002 0 -p -1.135446 8.49174 0 -p -0.663096 8.388413 0 -p -0.190746 8.358891 0 -p 0.591583 8.32937 0 -p 1.31482 8.593929 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 7 -k 7 ;
+rename "curve1" ($sLeft + "PalmCurve");
+
+//sets Left Hand Controls to correct position
+	select -cl  ;
+	select -r rightPinky rightRing rightMiddle rightIndex rightThumb rightPalmCurve ;
+	group; xform -os -piv 0 0 0;
+	rename "group1" "rightHandControls";
+	scale -r 0.378176 0.378176 0.378176 ;
+	rotate -r -os 0 -90 0 ;
+
+		setAttr rightHandControls.tx `getAttr rightWristLocator.tx`;
+		setAttr rightHandControls.ty `getAttr rightWristLocator.ty`;
+		setAttr rightHandControls.tz `getAttr rightWristLocator.tz`;
+
+	select -r rightHandControls ;
+	makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+
+
+
+
+//The Foot Part
+
+curve -d 1 -p 0 0.969468 -0.387163 -p 0 -0.248478 -0.387163 -p 0 -0.248478 6.074716 -p 0 -1.500256 7.191167 -p 0 -1.500256 -1.706604 -p 0 2.018254 -1.706604 -p 0 0.969468 -0.387163 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 ;
+
+addAttr -ln HeelRotX -at double  |curve1;
+setAttr -e -keyable true |curve1.HeelRotX;
+addAttr -ln HeelRotY -at double  |curve1;
+setAttr -e -keyable true |curve1.HeelRotY;
+addAttr -ln HeelRotZ -at double  |curve1;
+setAttr -e -keyable true |curve1.HeelRotZ;
+addAttr -ln BallRot -at double  |curve1;
+setAttr -e -keyable true |curve1.BallRot;
+addAttr -ln ToeRotX -at double  |curve1;
+setAttr -e -keyable true |curve1.ToeRotX;
+addAttr -ln ToeRotY -at double  |curve1;
+setAttr -e -keyable true |curve1.ToeRotY;
+addAttr -ln ToeRotZ -at double  |curve1;
+setAttr -e -keyable true |curve1.ToeRotZ;
+
+	rename "curve1" "rightFootControl";
+	setAttr rightFootControl.tx `getAttr rightHeelLocator.tx`;
+	setAttr rightFootControl.ty `getAttr rightHeelLocator.ty`;
+	setAttr rightFootControl.tz `getAttr rightHeelLocator.tz`;
+		//move the pivot
+		select -r rightFootControl;
+		xform -ws -piv `getAttr rightAnkleLocator.tx` `getAttr rightAnkleLocator.ty` `getAttr rightAnkleLocator.tz`;
+
+curve -d 1 -p 0 0.969468 -0.387163 -p 0 -0.248478 -0.387163 -p 0 -0.248478 6.074716 -p 0 -1.500256 7.191167 -p 0 -1.500256 -1.706604 -p 0 2.018254 -1.706604 -p 0 0.969468 -0.387163 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 ;
+
+addAttr -ln HeelRotX -at double  |curve1;
+setAttr -e -keyable true |curve1.HeelRotX;
+addAttr -ln HeelRotY -at double  |curve1;
+setAttr -e -keyable true |curve1.HeelRotY;
+addAttr -ln HeelRotZ -at double  |curve1;
+setAttr -e -keyable true |curve1.HeelRotZ;
+addAttr -ln BallRot -at double  |curve1;
+setAttr -e -keyable true |curve1.BallRot;
+addAttr -ln ToeRotX -at double  |curve1;
+setAttr -e -keyable true |curve1.ToeRotX;
+addAttr -ln ToeRotY -at double  |curve1;
+setAttr -e -keyable true |curve1.ToeRotY;
+addAttr -ln ToeRotZ -at double  |curve1;
+setAttr -e -keyable true |curve1.ToeRotZ;
+
+rename "curve1" "leftFootControl";
+	setAttr leftFootControl.tx `getAttr leftHeelLocator.tx`;
+	setAttr leftFootControl.ty `getAttr leftHeelLocator.ty`;
+	setAttr leftFootControl.tz `getAttr leftHeelLocator.tz`;
+		//move the pivot
+		select -r leftFootControl;
+		xform -ws -piv `getAttr leftAnkleLocator.tx` `getAttr leftAnkleLocator.ty` `getAttr leftAnkleLocator.tz`;
+
+// THE FEET ARE DONE
+//Here begins the back and such
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 1 -ut 0 -tol 0.01 -s 6 -ch 1;
+	scale -r 8 8 8;
+	xform -ws -t `getAttr rootJointLocator.tx` `getAttr rootJointLocator.ty` `getAttr rootJointLocator.tz`;
+	rename "nurbsCircle1" "rootControl";
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+	scale -r 5 5 5;
+	xform -ws -t `getAttr backLocator1.tx` `getAttr backLocator1.ty` `getAttr backLocator1.tz`;
+	rename "nurbsCircle1" "LowerBackControl";
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+	scale -r 5 5 5;
+	xform -ws -t `getAttr backLocator4.tx` `getAttr backLocator4.ty` `getAttr backLocator4.tz`;
+	rename "nurbsCircle1" "MidBackControl";
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+	scale -r 5 5 5;
+	xform -ws -t `getAttr backLocator7.tx` `getAttr backLocator7.ty` `getAttr backLocator7.tz`;
+	rename "nurbsCircle1" "UpperBackControl";
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+	xform -ws -t `getAttr backLocator2.tx` `getAttr backLocator2.ty` `getAttr backLocator2.tz`;
+	rename "nurbsCircle1" "BackControl2";
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+	xform -ws -t `getAttr backLocator3.tx` `getAttr backLocator3.ty` `getAttr backLocator3.tz`;
+	rename "nurbsCircle1" "BackControl3";
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+	xform -ws -t `getAttr backLocator5.tx` `getAttr backLocator5.ty` `getAttr backLocator5.tz`;
+	rename "nurbsCircle1" "BackControl5";
+
+	circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+	xform -ws -t `getAttr backLocator6.tx` `getAttr backLocator6.ty` `getAttr backLocator6.tz`;
+	rename "nurbsCircle1" "BackControl6";
+
+			//This section makes the upper back curve more curvy.
+			select -r UpperBackControl.cv[2:4] ;
+			select -tgl UpperBackControl.cv[0] UpperBackControl.cv[6:7] ;
+			move -r -ls -wd 0 0.51006 0 ;
+			select -r UpperBackControl.cv[7] ;
+			select -tgl UpperBackControl.cv[3] ;
+			move -r -ls -wd 0 0.596688 0 ;
+			select -d UpperBackControl.cv[3] UpperBackControl.cv[7] ;
+
+//headCurve, requires only rotates.
+curve -d 3 -p 0 5 0 -p 0.318085 4.951527 0 -p 0.587233 4.861811 0 -p 0.933279 4.60548 0 -p 1.074261 4.387599 0 -p 1.202426 4.105635 0 -p 1.330591 3.772406 0 -p 1.343408 3.413543 0 -p 1.336425 3.213867 0 -p 1.347263 3.163287 0 -p 1.379779 3.188577 0 -p 1.415907 3.21748 0 -p 1.441197 3.228318 0 -p 1.477326 3.206641 0 -p 1.52068 3.123546 0 -p 1.527906 2.910388 0 -p 1.513454 2.762261 0 -p 1.462874 2.606908 0 -p 1.390617 2.447943 0 -p 1.332812 2.321493 0 -p 1.303909 2.288978 0 -p 1.275006 2.288978 0 -p 1.260555 2.223946 0 -p 1.230621 2.005253 0 -p 1.141394 1.699332 0 -p 0.988433 1.482638 0 -p 0.720753 1.176717 0 -p 0.363845 0.97277 0 -p 0.0324303 0.870796 0 -p -0.146024 0.870796 0 -p -0.566665 1.023757 0 -p -0.885333 1.265944 0 -p -1.12752 1.635599 0 -p -1.229494 2.018 0 -p -1.243385 2.128425 0 -p -1.263799 2.203279 0 -p -1.338654 2.264523 0 -p -1.427118 2.427842 0 -p -1.508777 2.611575 0 -p -1.529192 2.842943 0 -p -1.536854 3.0197 0 -p -1.512592 3.144043 0 -p -1.485297 3.192567 0 -p -1.445872 3.177403 0 -p -1.406446 3.159206 0 -p -1.373086 3.162239 0 -p -1.376118 3.241091 0 -p -1.377707 3.485155 0 -p -1.334161 4.029478 0 -p -1.094659 4.443163 0 -p -0.637428 4.813303 0 -p -0.378039 4.927139 0 -p -0.149509 4.993486 0 -p 0 5 0 -k 0 -k 0 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 19 -k 20 -k 21 -k 22 -k 23 -k 24 -k 25 -k 26 -k 27 -k 28 -k 29 -k 30 -k 31 -k 32 -k 33 -k 34 -k 35 -k 36 -k 37 -k 38 -k 39 -k 40 -k 41 -k 42 -k 43 -k 44 -k 45 -k 46 -k 47 -k 48 -k 49 -k 50 -k 51 -k 51 -k 51 ;
+
+xform -ws -t `getAttr neckTipLocator.tx` `getAttr neckTipLocator.ty` `getAttr neckTipLocator.tz`;
+xform -ws -piv `getAttr neckLocator.tx` `getAttr neckLocator.ty` `getAttr neckLocator.tz`;
+rename "curve1" "headControlCurve";
+
+//WristCurves. Requires some more attributes.
+curve -d 1 -p -0.425386 1.418932 -2.073631 -p 0.425386 1.418932 -2.073631 -p 0.425386 1.418932 2.073631 -p -0.425386 1.418932 2.073631 -p -0.425386 1.418932 -2.073631 -p -0.425386 -1.418932 -2.073631 -p -0.425386 -1.418932 2.073631 -p -0.425386 1.418932 2.073631 -p -0.425386 1.418932 -2.073631 -p 0.425386 1.418932 -2.073631 -p 0.425386 1.418932 2.073631 -p -0.425386 1.418932 2.073631 -p -0.425386 -1.418932 2.073631 -p 0.425386 -1.418932 2.073631 -p 0.425386 1.418932 2.073631 -p 0.425386 1.418932 -2.073631 -p 0.425386 -1.418932 -2.073631 -p 0.425386 -1.418932 2.073631 -p -0.425386 -1.418932 2.073631 -p -0.425386 -1.418932 -2.073631 -p 0.425386 -1.418932 -2.073631 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 19 -k 20 ;
+xform -ws -t `getAttr leftWristLocator.tx` `getAttr leftWristLocator.ty` `getAttr leftWristLocator.tz`;
+rename "curve1" "leftWristControl";
+
+curve -d 1 -p -0.425386 1.418932 -2.073631 -p 0.425386 1.418932 -2.073631 -p 0.425386 1.418932 2.073631 -p -0.425386 1.418932 2.073631 -p -0.425386 1.418932 -2.073631 -p -0.425386 -1.418932 -2.073631 -p -0.425386 -1.418932 2.073631 -p -0.425386 1.418932 2.073631 -p -0.425386 1.418932 -2.073631 -p 0.425386 1.418932 -2.073631 -p 0.425386 1.418932 2.073631 -p -0.425386 1.418932 2.073631 -p -0.425386 -1.418932 2.073631 -p 0.425386 -1.418932 2.073631 -p 0.425386 1.418932 2.073631 -p 0.425386 1.418932 -2.073631 -p 0.425386 -1.418932 -2.073631 -p 0.425386 -1.418932 2.073631 -p -0.425386 -1.418932 2.073631 -p -0.425386 -1.418932 -2.073631 -p 0.425386 -1.418932 -2.073631 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 19 -k 20 ;
+xform -ws -t `getAttr rightWristLocator.tx` `getAttr rightWristLocator.ty` `getAttr rightWristLocator.tz`;
+rename "curve1" "rightWristControl";
+
+//Pole Vectors
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+xform -ws -t `getAttr rightElbowLocator.tx` `getAttr rightElbowLocator.ty` `getAttr rightElbowLocator.tz`;
+setAttr "nurbsCircle1.rotateX" 90;
+setAttr "nurbsCircle1.translateZ" -5;
+rename "nurbsCircle1" "rightElbowPoleVector";
+
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+xform -ws -t `getAttr leftElbowLocator.tx` `getAttr leftElbowLocator.ty` `getAttr leftElbowLocator.tz`;
+setAttr "nurbsCircle1.rotateX" 90;
+setAttr "nurbsCircle1.translateZ" -5;
+rename "nurbsCircle1" "leftElbowPoleVector";
+
+
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+xform -ws -t `getAttr leftCollarBoneLocator.tx` `getAttr leftCollarBoneLocator.ty` `getAttr leftCollarBoneLocator.tz`;
+setAttr "nurbsCircle1.rotateX" 90;
+move -r -ls -wd 2.5 2.5 0 ;
+scale -r 0.5 0.5 0.5;
+xform -ws -piv `getAttr leftCollarBoneLocator.tx` `getAttr leftCollarBoneLocator.ty` `getAttr leftCollarBoneLocator.tz`;
+rename "nurbsCircle1" "leftCollarBoneControl";
+
+//CollarBone Controls
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+xform -ws -t `getAttr rightCollarBoneLocator.tx` `getAttr rightCollarBoneLocator.ty` `getAttr rightCollarBoneLocator.tz`;
+setAttr "nurbsCircle1.rotateX" 90;
+move -r -ls -wd -2.5 2.5 0 ;
+scale -r 0.5 0.5 0.5;
+xform -ws -piv `getAttr rightCollarBoneLocator.tx` `getAttr rightCollarBoneLocator.ty` `getAttr rightCollarBoneLocator.tz`;
+rename "nurbsCircle1" "rightCollarBoneControl";
+
+  deleteUI autoRig_04;
+curvesFinalCheck;
+
+
+}
+
+
+proc curvesFinalCheck()
+{
+if (`window -exists autoRig_x`) 
+  deleteUI autoRig_x; 
+
+window -rtf on -title "Shane's Auto Rigger" autoRig_x; 
+columnLayout;
+
+	text -label " If you need to move or scale any ";
+	text -label " of the curves to fit around";
+	text -label " your character, do it now.";
+	text -label " Remember to check that the pivot ";
+	text -label " point is still at the ";
+	text -label " original joint's location";
+	text -label "";
+	text -label " If you only need the curves, quit here ";
+	text -label " The next step will lock attributes ";
+	text -label " on the curves, so you can't break the rig ";
+	text -label "";
+	text -label "";
+	button -w 200 -label " Finalize Curves and Add IK " -command "lockDownCurves"   lockDownButton;
+
+showWindow autoRig_x;
+}
+
+proc lockDownCurves()
+{
+if (`window -exists autoRig_06`) 
+  deleteUI autoRig_06; 
+
+
+window -rtf on -title "Shane's Auto Rigger" autoRig_06; 
+columnLayout;
+  deleteUI autoRig_x;
+	text -label "Your rig should now be complete.";
+	text -label "The following buttons will assist you";
+	text -label "with the skinning process.";
+	separator -w 100;
+	text -label "";
+	text -label "When binding a character mesh to a skeleton";
+	text -label "it is important not to bind the tip joints.";
+	text -label "The following button will select all the joints";
+	text -label "required for binding.";
+	text -label "";
+	button -w 200 -label " Select Bind Joints " -command "selectBindJointsproc"  selectBindJoints;
+	separator -w 100;
+	text -label "";
+	text -label "It may be useful to turn on joint names";
+	text -label "";
+	button -w 200 -label " Show/Hide Joint Names " -command "showOrHideJointNames"  showOrHideButton;
+	separator -w 100;
+	text -label "";
+	text -label "The bind pose button sets all curve attributes to zero";
+	text -label "";
+	button -w 200 -label " Go To Bind Pose " -command "goToBindPose"  bindPoseButton;
+	separator -w 100;
+	
+	//actually doesn't lock anything, but I don't want to change the name
+	addAndLockAtts;
+	//locking everything Down
+	lockDown;
+
+showWindow autoRig_06;
+}
+
+//This proc will also add IK, Inverse Foot, and constraints.
+proc addAndLockAtts()
+{
+
+
+select -cl  ;
+select -r leftHandControls rightHandControls rightFootControl leftFootControl rootControl LowerBackControl MidBackControl UpperBackControl BackControl2 BackControl3 BackControl5 BackControl6 headControlCurve leftWristControl rightWristControl rightElbowPoleVector leftElbowPoleVector leftCollarBoneControl rightCollarBoneControl ;
+FreezeTransformations;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+DeleteHistory;
+
+select -cl  ;
+select -r leftAnkleLocator leftHeelLocator leftBallLocator leftToeLocator rightHeelLocator rightAnkleLocator rightBallLocator rightToeLocator ;
+	string $sel3[] = `ls -sl`;
+	string $current3;
+		for ($current3 in $sel3)
+		{
+			select -d;
+			joint -p `getAttr ($current3 + ".tx")` `getAttr ($current3 + ".ty")` `getAttr ($current3 + ".tz")` ;
+		}
+			select -d;
+			joint -p `getAttr leftAnkleLocator.tx` `getAttr leftAnkleLocator.ty` `getAttr leftAnkleLocator.tz` ;
+			select -d;			
+			joint -p `getAttr rightAnkleLocator.tx` `getAttr rightAnkleLocator.ty` `getAttr rightAnkleLocator.tz` ;
+			select -d;
+rename "joint1" "leftINVmain";
+rename "joint2" "leftINVheel";
+rename "joint3" "leftINVball";
+rename "joint4" "leftINVtoe";
+
+rename "joint5" "rightINVheel";
+rename "joint6" "rightINVmain";
+rename "joint7" "rightINVball";
+rename "joint8" "rightINVtoe";
+
+rename "joint9" "leftINVankle";
+rename "joint10" "rightINVankle";
+
+select -cl  ;
+select -r leftINVankle ;
+select -add leftINVball ;
+parent;
+select -cl  ;
+select -r leftINVball ;
+select -add leftINVtoe ;
+parent;
+select -cl  ;
+select -r leftINVtoe ;
+select -add leftINVheel ;
+parent;
+select -cl  ;
+select -r leftINVheel ;
+select -add leftINVmain ;
+parent;
+select -cl  ;
+select -r rightINVankle ;
+select -add rightINVball ;
+parent;
+select -cl  ;
+select -r rightINVball ;
+select -add rightINVtoe ;
+parent;
+select -cl  ;
+select -r rightINVtoe ;
+select -add rightINVheel ;
+parent;
+select -cl  ;
+select -r rightINVheel ;
+select -add rightINVmain ;
+parent;
+
+	//Adding in the Left Side IK Handles.
+		
+	select -r leftHip.rotatePivot ;
+	select -add leftAnkle.rotatePivot ;
+		ikHandle -sol ikSCsolver -s sticky;
+
+	select -d ikHandle1 ;
+	select -r leftAnkle.rotatePivot ;
+	select -add leftBall.rotatePivot ;
+		ikHandle -sol ikSCsolver -s sticky;
+
+	select -d ikHandle2 ;
+	select -r leftBall.rotatePivot ;
+	select -add leftToe.rotatePivot ;
+		ikHandle -sol ikSCsolver -s sticky;
+
+		rename "ikHandle1" "leftAnkleIK";
+		rename "ikHandle2" "leftBallIK";
+		rename "ikHandle3" "leftToeIK";
+
+	select -cl  ;
+	select -r leftAnkleIK ;
+	select -add leftINVankle ;
+		parent;
+
+	select -cl  ;
+	select -r leftBallIK ;
+	select -add leftINVball ;
+		parent;
+
+	select -cl  ;
+	select -r leftToeIK ;
+	select -add leftINVtoe ;
+		parent;
+
+select -cl  ;
+select -r leftFootControl ;
+select -add leftINVmain ;
+parentConstraint -mo -weight 1;
+
+//Connect the FootAttributes
+connectAttr -f leftFootControl.HeelRotX leftINVheel.rotateX;
+connectAttr -f leftFootControl.HeelRotY leftINVheel.rotateY;
+connectAttr -f leftFootControl.HeelRotZ leftINVheel.rotateZ;
+connectAttr -f leftFootControl.ToeRotX leftINVtoe.rotateX;
+connectAttr -f leftFootControl.ToeRotY leftINVtoe.rotateY;
+connectAttr -f leftFootControl.ToeRotZ leftINVtoe.rotateZ;
+connectAttr -f leftFootControl.BallRot leftINVball.rotateX;
+
+	select -r rightHip.rotatePivot ;
+	select -add rightAnkle.rotatePivot ;
+		ikHandle -sol ikSCsolver -s sticky;
+
+	select -d ikHandle1 ;
+	select -r rightAnkle.rotatePivot ;
+	select -add rightBall.rotatePivot ;
+		ikHandle -sol ikSCsolver -s sticky;
+
+	select -d ikHandle2 ;
+	select -r rightBall.rotatePivot ;
+	select -add rightToe.rotatePivot ;
+		ikHandle -sol ikSCsolver -s sticky;
+
+		rename "ikHandle1" "rightAnkleIK";
+		rename "ikHandle2" "rightBallIK";
+		rename "ikHandle3" "rightToeIK";
+
+	select -cl  ;
+	select -r rightAnkleIK ;
+	select -add rightINVankle ;
+		parent;
+
+	select -cl  ;
+	select -r rightBallIK ;
+	select -add rightINVball ;
+		parent;
+
+	select -cl  ;
+	select -r rightToeIK ;
+	select -add rightINVtoe ;
+		parent;
+
+select -cl  ;
+select -r rightFootControl ;
+select -add rightINVmain ;
+parentConstraint -mo -weight 1;
+
+//Connect the FootAttributes
+connectAttr -f rightFootControl.HeelRotX rightINVheel.rotateX;
+connectAttr -f rightFootControl.HeelRotY rightINVheel.rotateY;
+connectAttr -f rightFootControl.HeelRotZ rightINVheel.rotateZ;
+connectAttr -f rightFootControl.ToeRotX rightINVtoe.rotateX;
+connectAttr -f rightFootControl.ToeRotY rightINVtoe.rotateY;
+connectAttr -f rightFootControl.ToeRotZ rightINVtoe.rotateZ;
+connectAttr -f rightFootControl.BallRot rightINVball.rotateX;
+
+//The Hands, adding a bunch of controls to the fingers.
+
+select -r rightPinky rightRing rightMiddle rightIndex rightThumb rightPalmCurve leftPinky leftRing leftMiddle leftIndex leftThumb leftPalmCurve ;
+
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftPinky;
+setAttr -e -keyable true |leftHandControls|leftPinky.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftRing;
+setAttr -e -keyable true |leftHandControls|leftRing.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftMiddle;
+setAttr -e -keyable true |leftHandControls|leftMiddle.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftIndex;
+setAttr -e -keyable true |leftHandControls|leftIndex.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftThumb;
+setAttr -e -keyable true |leftHandControls|leftThumb.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightPinky;
+setAttr -e -keyable true |rightHandControls|rightPinky.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightRing;
+setAttr -e -keyable true |rightHandControls|rightRing.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightMiddle;
+setAttr -e -keyable true |rightHandControls|rightMiddle.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightIndex;
+setAttr -e -keyable true |rightHandControls|rightIndex.KnuckleRot;
+addAttr -ln KnuckleRot -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightThumb;
+setAttr -e -keyable true |rightHandControls|rightThumb.KnuckleRot;
+
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftPinky;
+setAttr -e -keyable true |leftHandControls|leftPinky.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftRing;
+setAttr -e -keyable true |leftHandControls|leftRing.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftMiddle;
+setAttr -e -keyable true |leftHandControls|leftMiddle.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftIndex;
+setAttr -e -keyable true |leftHandControls|leftIndex.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftThumb;
+setAttr -e -keyable true |leftHandControls|leftThumb.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightPinky;
+setAttr -e -keyable true |rightHandControls|rightPinky.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightRing;
+setAttr -e -keyable true |rightHandControls|rightRing.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightMiddle;
+setAttr -e -keyable true |rightHandControls|rightMiddle.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightIndex;
+setAttr -e -keyable true |rightHandControls|rightIndex.MidRot;
+addAttr -ln MidRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightThumb;
+setAttr -e -keyable true |rightHandControls|rightThumb.MidRot;
+
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftPinky;
+setAttr -e -keyable true |leftHandControls|leftPinky.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftRing;
+setAttr -e -keyable true |leftHandControls|leftRing.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftMiddle;
+setAttr -e -keyable true |leftHandControls|leftMiddle.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftIndex;
+setAttr -e -keyable true |leftHandControls|leftIndex.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftThumb;
+setAttr -e -keyable true |leftHandControls|leftThumb.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightPinky;
+setAttr -e -keyable true |rightHandControls|rightPinky.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightRing;
+setAttr -e -keyable true |rightHandControls|rightRing.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightMiddle;
+setAttr -e -keyable true |rightHandControls|rightMiddle.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightIndex;
+setAttr -e -keyable true |rightHandControls|rightIndex.EndRot;
+addAttr -ln EndRot -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightThumb;
+setAttr -e -keyable true |rightHandControls|rightThumb.EndRot;
+
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftPinky;
+setAttr -e -keyable true |leftHandControls|leftPinky.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftRing;
+setAttr -e -keyable true |leftHandControls|leftRing.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftMiddle;
+setAttr -e -keyable true |leftHandControls|leftMiddle.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftIndex;
+setAttr -e -keyable true |leftHandControls|leftIndex.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |leftHandControls|leftThumb;
+setAttr -e -keyable true |leftHandControls|leftThumb.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightPinky;
+setAttr -e -keyable true |rightHandControls|rightPinky.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightRing;
+setAttr -e -keyable true |rightHandControls|rightRing.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightMiddle;
+setAttr -e -keyable true |rightHandControls|rightMiddle.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightIndex;
+setAttr -e -keyable true |rightHandControls|rightIndex.KnuckleSpread;
+addAttr -ln KnuckleSpread -at double  -min -20 -max 20 -dv 0 |rightHandControls|rightThumb;
+setAttr -e -keyable true |rightHandControls|rightThumb.KnuckleSpread;
+
+addAttr -ln PinkyCup -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftPinky;
+setAttr -e -keyable true |leftHandControls|leftPinky.PinkyCup;
+
+addAttr -ln ThumbCupX -at double  -min 0 -max 20 -dv 0 |leftHandControls|leftThumb;
+setAttr -e -keyable true |leftHandControls|leftThumb.ThumbCupX;
+
+
+
+addAttr -ln PinkyCup -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightPinky;
+setAttr -e -keyable true |rightHandControls|rightPinky.PinkyCup;
+
+addAttr -ln ThumbCupX -at double  -min 0 -max 20 -dv 0 |rightHandControls|rightThumb;
+setAttr -e -keyable true |rightHandControls|rightThumb.ThumbCupX;
+
+
+
+
+//Setting Driven Keys for the hands. Usually the most tedious task made simple.
+//Knuckle, set Driven KEys. RIGHT INDEX FINGER
+
+setDrivenKeyframe -cd rightIndex.KnuckleRot rightIndexKnuckle.rotateZ;
+	setAttr "rightIndex.KnuckleRot" 20;
+	setAttr "rightIndexKnuckle.rotateZ" 95;
+setDrivenKeyframe -cd rightIndex.KnuckleRot rightIndexKnuckle.rotateZ;
+	setAttr "rightIndex.KnuckleRot" -20;
+	setAttr "rightIndexKnuckle.rotateZ" -15;
+setDrivenKeyframe -cd rightIndex.KnuckleRot rightIndexKnuckle.rotateZ;
+	setAttr "rightIndex.KnuckleRot" 0;
+
+//Middle finger bend
+setDrivenKeyframe -cd rightIndex.MidRot rightIndex1.rotateZ;
+	setAttr "rightIndex.MidRot" 20;
+	setAttr "rightIndex1.rotateZ" 105;
+setDrivenKeyframe -cd rightIndex.MidRot rightIndex1.rotateZ;
+	setAttr "rightIndex.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd rightIndex.EndRot rightIndex2.rotateZ;
+	setAttr "rightIndex.EndRot" 20;
+	setAttr "rightIndex2.rotateZ" 90;
+setDrivenKeyframe -cd rightIndex.EndRot rightIndex2.rotateZ;
+	setAttr "rightIndex.EndRot" 0;
+
+
+setDrivenKeyframe -cd rightIndex.KnuckleSpread rightIndexKnuckle.rotateY;
+	setAttr "rightIndex.KnuckleSpread" 20;
+	setAttr "rightIndexKnuckle.rotateY" 25;
+setDrivenKeyframe -cd rightIndex.KnuckleSpread rightIndexKnuckle.rotateY;
+	setAttr "rightIndex.KnuckleSpread" -20;
+	setAttr "rightIndexKnuckle.rotateY" -25;
+setDrivenKeyframe -cd rightIndex.KnuckleSpread rightIndexKnuckle.rotateY;
+	setAttr "rightIndex.KnuckleSpread" 0;
+
+
+//Knuckle, set Driven KEys
+setDrivenKeyframe -cd rightMiddle.KnuckleRot rightMiddleKnuckle.rotateZ;
+	setAttr "rightMiddle.KnuckleRot" 20;
+	setAttr "rightMiddleKnuckle.rotateZ" 95;
+setDrivenKeyframe -cd rightMiddle.KnuckleRot rightMiddleKnuckle.rotateZ;
+	setAttr "rightMiddle.KnuckleRot" -20;
+	setAttr "rightMiddleKnuckle.rotateZ" -15;
+setDrivenKeyframe -cd rightMiddle.KnuckleRot rightMiddleKnuckle.rotateZ;
+	setAttr "rightMiddle.KnuckleRot" 0;
+
+//Middle finger bend
+setDrivenKeyframe -cd rightMiddle.MidRot rightMiddle1.rotateZ;
+	setAttr "rightMiddle.MidRot" 20;
+	setAttr "rightMiddle1.rotateZ" 105;
+setDrivenKeyframe -cd rightMiddle.MidRot rightMiddle1.rotateZ;
+	setAttr "rightMiddle.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd rightMiddle.EndRot rightMiddle2.rotateZ;
+	setAttr "rightMiddle.EndRot" 20;
+	setAttr "rightMiddle2.rotateZ" 90;
+setDrivenKeyframe -cd rightMiddle.EndRot rightMiddle2.rotateZ;
+	setAttr "rightMiddle.EndRot" 0;
+
+
+setDrivenKeyframe -cd rightMiddle.KnuckleSpread rightMiddleKnuckle.rotateY;
+	setAttr "rightMiddle.KnuckleSpread" 20;
+	setAttr "rightMiddleKnuckle.rotateY" 25;
+setDrivenKeyframe -cd rightMiddle.KnuckleSpread rightMiddleKnuckle.rotateY;
+	setAttr "rightMiddle.KnuckleSpread" -20;
+	setAttr "rightMiddleKnuckle.rotateY" -25;
+setDrivenKeyframe -cd rightMiddle.KnuckleSpread rightMiddleKnuckle.rotateY;
+	setAttr "rightMiddle.KnuckleSpread" 0;
+
+
+
+//Knuckle, set Driven KEys
+setDrivenKeyframe -cd rightRing.KnuckleRot rightRingKnuckle.rotateZ;
+	setAttr "rightRing.KnuckleRot" 20;
+	setAttr "rightRingKnuckle.rotateZ" 95;
+setDrivenKeyframe -cd rightRing.KnuckleRot rightRingKnuckle.rotateZ;
+	setAttr "rightRing.KnuckleRot" -20;
+	setAttr "rightRingKnuckle.rotateZ" -15;
+setDrivenKeyframe -cd rightRing.KnuckleRot rightRingKnuckle.rotateZ;
+	setAttr "rightRing.KnuckleRot" 0;
+
+//Ring finger bend
+setDrivenKeyframe -cd rightRing.MidRot rightRing1.rotateZ;
+	setAttr "rightRing.MidRot" 20;
+	setAttr "rightRing1.rotateZ" 105;
+setDrivenKeyframe -cd rightRing.MidRot rightRing1.rotateZ;
+	setAttr "rightRing.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd rightRing.EndRot rightRing2.rotateZ;
+	setAttr "rightRing.EndRot" 20;
+	setAttr "rightRing2.rotateZ" 90;
+setDrivenKeyframe -cd rightRing.EndRot rightRing2.rotateZ;
+	setAttr "rightRing.EndRot" 0;
+
+
+setDrivenKeyframe -cd rightRing.KnuckleSpread rightRingKnuckle.rotateY;
+	setAttr "rightRing.KnuckleSpread" 20;
+	setAttr "rightRingKnuckle.rotateY" 25;
+setDrivenKeyframe -cd rightRing.KnuckleSpread rightRingKnuckle.rotateY;
+	setAttr "rightRing.KnuckleSpread" -20;
+	setAttr "rightRingKnuckle.rotateY" -25;
+setDrivenKeyframe -cd rightRing.KnuckleSpread rightRingKnuckle.rotateY;
+	setAttr "rightRing.KnuckleSpread" 0;
+
+
+//Knuckle, set Driven KEys
+setDrivenKeyframe -cd rightPinky.KnuckleRot rightPinkyKnuckle.rotateZ;
+	setAttr "rightPinky.KnuckleRot" 20;
+	setAttr "rightPinkyKnuckle.rotateZ" 95;
+setDrivenKeyframe -cd rightPinky.KnuckleRot rightPinkyKnuckle.rotateZ;
+	setAttr "rightPinky.KnuckleRot" -20;
+	setAttr "rightPinkyKnuckle.rotateZ" -15;
+setDrivenKeyframe -cd rightPinky.KnuckleRot rightPinkyKnuckle.rotateZ;
+	setAttr "rightPinky.KnuckleRot" 0;
+
+//Pinky finger bend
+setDrivenKeyframe -cd rightPinky.MidRot rightPinky1.rotateZ;
+	setAttr "rightPinky.MidRot" 20;
+	setAttr "rightPinky1.rotateZ" 105;
+setDrivenKeyframe -cd rightPinky.MidRot rightPinky1.rotateZ;
+	setAttr "rightPinky.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd rightPinky.EndRot rightPinky2.rotateZ;
+	setAttr "rightPinky.EndRot" 20;
+	setAttr "rightPinky2.rotateZ" 90;
+setDrivenKeyframe -cd rightPinky.EndRot rightPinky2.rotateZ;
+	setAttr "rightPinky.EndRot" 0;
+
+
+setDrivenKeyframe -cd rightPinky.KnuckleSpread rightPinkyKnuckle.rotateY;
+	setAttr "rightPinky.KnuckleSpread" 20;
+	setAttr "rightPinkyKnuckle.rotateY" 25;
+setDrivenKeyframe -cd rightPinky.KnuckleSpread rightPinkyKnuckle.rotateY;
+	setAttr "rightPinky.KnuckleSpread" -20;
+	setAttr "rightPinkyKnuckle.rotateY" -25;
+setDrivenKeyframe -cd rightPinky.KnuckleSpread rightPinkyKnuckle.rotateY;
+	setAttr "rightPinky.KnuckleSpread" 0;
+
+setDrivenKeyframe -cd rightThumb.KnuckleRot rightThumbKnuckle.rotateZ;
+	setAttr "rightThumb.KnuckleRot" 20;
+	setAttr "rightThumbKnuckle.rotateZ" 95;
+setDrivenKeyframe -cd rightThumb.KnuckleRot rightThumbKnuckle.rotateZ;
+	setAttr "rightThumb.KnuckleRot" -20;
+	setAttr "rightThumbKnuckle.rotateZ" -15;
+setDrivenKeyframe -cd rightThumb.KnuckleRot rightThumbKnuckle.rotateZ;
+	setAttr "rightThumb.KnuckleRot" 0;
+
+//Thumb finger bend
+setDrivenKeyframe -cd rightThumb.MidRot rightThumb1.rotateY;
+	setAttr "rightThumb.MidRot" 20;
+	setAttr "rightThumb1.rotateY" -105;
+setDrivenKeyframe -cd rightThumb.MidRot rightThumb1.rotateY;
+	setAttr "rightThumb.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd rightThumb.EndRot rightThumb2.rotateY;
+	setAttr "rightThumb.EndRot" 20;
+	setAttr "rightThumb2.rotateY" -90;
+setDrivenKeyframe -cd rightThumb.EndRot rightThumb2.rotateY;
+	setAttr "rightThumb.EndRot" 0;
+
+
+setDrivenKeyframe -cd rightThumb.KnuckleSpread rightThumbKnuckle.rotateY;
+	setAttr "rightThumb.KnuckleSpread" 20;
+	setAttr "rightThumbKnuckle.rotateY" 25;
+setDrivenKeyframe -cd rightThumb.KnuckleSpread rightThumbKnuckle.rotateY;
+	setAttr "rightThumb.KnuckleSpread" -20;
+	setAttr "rightThumbKnuckle.rotateY" -25;
+setDrivenKeyframe -cd rightThumb.KnuckleSpread rightThumbKnuckle.rotateY;
+	setAttr "rightThumb.KnuckleSpread" 0;
+
+setDrivenKeyframe -cd rightThumb.ThumbCupX rightThumbKnuckle.rotateX;
+	setAttr "rightThumb.ThumbCupX" 20;
+	setAttr "rightThumbKnuckle.rotateX" 70;
+setDrivenKeyframe -cd rightThumb.ThumbCupX rightThumbKnuckle.rotateX;
+	setAttr "rightThumb.ThumbCupX" 0;
+
+
+
+// LEFT LEFT LEFT
+// SIDE SIDE SIDE
+
+setDrivenKeyframe -cd leftIndex.KnuckleRot leftIndexKnuckle.rotateZ;
+	setAttr "leftIndex.KnuckleRot" 20;
+	setAttr "leftIndexKnuckle.rotateZ" -95;
+setDrivenKeyframe -cd leftIndex.KnuckleRot leftIndexKnuckle.rotateZ;
+	setAttr "leftIndex.KnuckleRot" -20;
+	setAttr "leftIndexKnuckle.rotateZ" 15;
+setDrivenKeyframe -cd leftIndex.KnuckleRot leftIndexKnuckle.rotateZ;
+	setAttr "leftIndex.KnuckleRot" 0;
+
+//Middle finger bend
+setDrivenKeyframe -cd leftIndex.MidRot leftIndex1.rotateZ;
+	setAttr "leftIndex.MidRot" 20;
+	setAttr "leftIndex1.rotateZ" -105;
+setDrivenKeyframe -cd leftIndex.MidRot leftIndex1.rotateZ;
+	setAttr "leftIndex.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd leftIndex.EndRot leftIndex2.rotateZ;
+	setAttr "leftIndex.EndRot" 20;
+	setAttr "leftIndex2.rotateZ" -90;
+setDrivenKeyframe -cd leftIndex.EndRot leftIndex2.rotateZ;
+	setAttr "leftIndex.EndRot" 0;
+
+
+setDrivenKeyframe -cd leftIndex.KnuckleSpread leftIndexKnuckle.rotateY;
+	setAttr "leftIndex.KnuckleSpread" 20;
+	setAttr "leftIndexKnuckle.rotateY" -25;
+setDrivenKeyframe -cd leftIndex.KnuckleSpread leftIndexKnuckle.rotateY;
+	setAttr "leftIndex.KnuckleSpread" -20;
+	setAttr "leftIndexKnuckle.rotateY" 25;
+setDrivenKeyframe -cd leftIndex.KnuckleSpread leftIndexKnuckle.rotateY;
+	setAttr "leftIndex.KnuckleSpread" 0;
+
+
+//Knuckle, set Driven KEys
+setDrivenKeyframe -cd leftMiddle.KnuckleRot leftMiddleKnuckle.rotateZ;
+	setAttr "leftMiddle.KnuckleRot" 20;
+	setAttr "leftMiddleKnuckle.rotateZ" -95;
+setDrivenKeyframe -cd leftMiddle.KnuckleRot leftMiddleKnuckle.rotateZ;
+	setAttr "leftMiddle.KnuckleRot" -20;
+	setAttr "leftMiddleKnuckle.rotateZ" 15;
+setDrivenKeyframe -cd leftMiddle.KnuckleRot leftMiddleKnuckle.rotateZ;
+	setAttr "leftMiddle.KnuckleRot" 0;
+
+//Middle finger bend
+setDrivenKeyframe -cd leftMiddle.MidRot leftMiddle1.rotateZ;
+	setAttr "leftMiddle.MidRot" 20;
+	setAttr "leftMiddle1.rotateZ" -105;
+setDrivenKeyframe -cd leftMiddle.MidRot leftMiddle1.rotateZ;
+	setAttr "leftMiddle.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd leftMiddle.EndRot leftMiddle2.rotateZ;
+	setAttr "leftMiddle.EndRot" 20;
+	setAttr "leftMiddle2.rotateZ" -90;
+setDrivenKeyframe -cd leftMiddle.EndRot leftMiddle2.rotateZ;
+	setAttr "leftMiddle.EndRot" 0;
+
+
+setDrivenKeyframe -cd leftMiddle.KnuckleSpread leftMiddleKnuckle.rotateY;
+	setAttr "leftMiddle.KnuckleSpread" 20;
+	setAttr "leftMiddleKnuckle.rotateY" -25;
+setDrivenKeyframe -cd leftMiddle.KnuckleSpread leftMiddleKnuckle.rotateY;
+	setAttr "leftMiddle.KnuckleSpread" -20;
+	setAttr "leftMiddleKnuckle.rotateY" 25;
+setDrivenKeyframe -cd leftMiddle.KnuckleSpread leftMiddleKnuckle.rotateY;
+	setAttr "leftMiddle.KnuckleSpread" 0;
+
+
+
+//Knuckle, set Driven KEys
+setDrivenKeyframe -cd leftRing.KnuckleRot leftRingKnuckle.rotateZ;
+	setAttr "leftRing.KnuckleRot" 20;
+	setAttr "leftRingKnuckle.rotateZ" -95;
+setDrivenKeyframe -cd leftRing.KnuckleRot leftRingKnuckle.rotateZ;
+	setAttr "leftRing.KnuckleRot" -20;
+	setAttr "leftRingKnuckle.rotateZ" 15;
+setDrivenKeyframe -cd leftRing.KnuckleRot leftRingKnuckle.rotateZ;
+	setAttr "leftRing.KnuckleRot" 0;
+
+//Ring finger bend
+setDrivenKeyframe -cd leftRing.MidRot leftRing1.rotateZ;
+	setAttr "leftRing.MidRot" 20;
+	setAttr "leftRing1.rotateZ" -105;
+setDrivenKeyframe -cd leftRing.MidRot leftRing1.rotateZ;
+	setAttr "leftRing.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd leftRing.EndRot leftRing2.rotateZ;
+	setAttr "leftRing.EndRot" 20;
+	setAttr "leftRing2.rotateZ" -90;
+setDrivenKeyframe -cd leftRing.EndRot leftRing2.rotateZ;
+	setAttr "leftRing.EndRot" 0;
+
+
+setDrivenKeyframe -cd leftRing.KnuckleSpread leftRingKnuckle.rotateY;
+	setAttr "leftRing.KnuckleSpread" 20;
+	setAttr "leftRingKnuckle.rotateY" -25;
+setDrivenKeyframe -cd leftRing.KnuckleSpread leftRingKnuckle.rotateY;
+	setAttr "leftRing.KnuckleSpread" -20;
+	setAttr "leftRingKnuckle.rotateY" 25;
+setDrivenKeyframe -cd leftRing.KnuckleSpread leftRingKnuckle.rotateY;
+	setAttr "leftRing.KnuckleSpread" 0;
+
+
+//Knuckle, set Driven KEys
+setDrivenKeyframe -cd leftPinky.KnuckleRot leftPinkyKnuckle.rotateZ;
+	setAttr "leftPinky.KnuckleRot" 20;
+	setAttr "leftPinkyKnuckle.rotateZ" -95;
+setDrivenKeyframe -cd leftPinky.KnuckleRot leftPinkyKnuckle.rotateZ;
+	setAttr "leftPinky.KnuckleRot" -20;
+	setAttr "leftPinkyKnuckle.rotateZ" 15;
+setDrivenKeyframe -cd leftPinky.KnuckleRot leftPinkyKnuckle.rotateZ;
+	setAttr "leftPinky.KnuckleRot" 0;
+
+//Pinky finger bend
+setDrivenKeyframe -cd leftPinky.MidRot leftPinky1.rotateZ;
+	setAttr "leftPinky.MidRot" 20;
+	setAttr "leftPinky1.rotateZ" -105;
+setDrivenKeyframe -cd leftPinky.MidRot leftPinky1.rotateZ;
+	setAttr "leftPinky.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd leftPinky.EndRot leftPinky2.rotateZ;
+	setAttr "leftPinky.EndRot" 20;
+	setAttr "leftPinky2.rotateZ" -90;
+setDrivenKeyframe -cd leftPinky.EndRot leftPinky2.rotateZ;
+	setAttr "leftPinky.EndRot" 0;
+
+
+setDrivenKeyframe -cd leftPinky.KnuckleSpread leftPinkyKnuckle.rotateY;
+	setAttr "leftPinky.KnuckleSpread" 20;
+	setAttr "leftPinkyKnuckle.rotateY" -25;
+setDrivenKeyframe -cd leftPinky.KnuckleSpread leftPinkyKnuckle.rotateY;
+	setAttr "leftPinky.KnuckleSpread" -20;
+	setAttr "leftPinkyKnuckle.rotateY" 25;
+setDrivenKeyframe -cd leftPinky.KnuckleSpread leftPinkyKnuckle.rotateY;
+	setAttr "leftPinky.KnuckleSpread" 0;
+
+setDrivenKeyframe -cd leftThumb.KnuckleRot leftThumbKnuckle.rotateZ;
+	setAttr "leftThumb.KnuckleRot" 20;
+	setAttr "leftThumbKnuckle.rotateZ" -95;
+setDrivenKeyframe -cd leftThumb.KnuckleRot leftThumbKnuckle.rotateZ;
+	setAttr "leftThumb.KnuckleRot" -20;
+	setAttr "leftThumbKnuckle.rotateZ" 15;
+setDrivenKeyframe -cd leftThumb.KnuckleRot leftThumbKnuckle.rotateZ;
+	setAttr "leftThumb.KnuckleRot" 0;
+
+//Thumb finger bend
+setDrivenKeyframe -cd leftThumb.MidRot leftThumb1.rotateY;
+	setAttr "leftThumb.MidRot" 20;
+	setAttr "leftThumb1.rotateY" 105;
+setDrivenKeyframe -cd leftThumb.MidRot leftThumb1.rotateY;
+	setAttr "leftThumb.MidRot" 0;
+
+//End Rotate
+setDrivenKeyframe -cd leftThumb.EndRot leftThumb2.rotateY;
+	setAttr "leftThumb.EndRot" 20;
+	setAttr "leftThumb2.rotateY" 90;
+setDrivenKeyframe -cd leftThumb.EndRot leftThumb2.rotateY;
+	setAttr "leftThumb.EndRot" 0;
+
+
+setDrivenKeyframe -cd leftThumb.KnuckleSpread leftThumbKnuckle.rotateY;
+	setAttr "leftThumb.KnuckleSpread" 20;
+	setAttr "leftThumbKnuckle.rotateY" -25;
+setDrivenKeyframe -cd leftThumb.KnuckleSpread leftThumbKnuckle.rotateY;
+	setAttr "leftThumb.KnuckleSpread" -20;
+	setAttr "leftThumbKnuckle.rotateY" 25;
+setDrivenKeyframe -cd leftThumb.KnuckleSpread leftThumbKnuckle.rotateY;
+	setAttr "leftThumb.KnuckleSpread" 0;
+
+setDrivenKeyframe -cd leftThumb.ThumbCupX leftThumbKnuckle.rotateX;
+	setAttr "leftThumb.ThumbCupX" 20;
+	setAttr "leftThumbKnuckle.rotateX" 70;
+setDrivenKeyframe -cd leftThumb.ThumbCupX leftThumbKnuckle.rotateX;
+	setAttr "leftThumb.ThumbCupX" 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//spinal Column
+
+select -r back1 ;
+select -tgl LowerBackControl ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r back2 ;
+select -tgl BackControl2 ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r back3 ;
+select -tgl BackControl3 ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r back4 ;
+select -tgl MidBackControl ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r back5 ;
+select -tgl BackControl5 ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r back6 ;
+select -tgl BackControl6 ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r back7 ;
+select -tgl UpperBackControl ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -cl  ;
+select -r LowerBackControl ;
+select -tgl back1 ;
+	orientConstraint -mo -weight 1;
+
+select -r BackControl2 ;
+select -tgl back2 ;
+	orientConstraint -mo -weight 1;
+select -r BackControl3 ;
+select -tgl back3 ;
+	orientConstraint -mo -weight 1;
+
+select -r MidBackControl ;
+select -tgl back4 ;
+	orientConstraint -mo -weight 1;
+
+select -r BackControl5 ;
+select -tgl back5 ;
+	orientConstraint -mo -weight 1;
+
+select -r BackControl6 ;
+select -tgl back6 ;
+	orientConstraint -mo -weight 1;
+
+select -cl  ;
+select -r UpperBackControl ;
+select -tgl back7 ;
+	orientConstraint -mo -weight 1;
+
+
+select -r LowerBackControl ;
+select -tgl BackControl2 ;
+	orientConstraint -mo -weight 1;
+
+select -r LowerBackControl ;
+select -tgl BackControl3 ;
+	orientConstraint -mo -weight 1;
+
+select -r MidBackControl ;
+select -tgl BackControl3 ;
+	orientConstraint -mo -weight 1;
+
+select -r MidBackControl ;
+select -tgl BackControl2 ;
+	orientConstraint -mo -weight 1;
+
+select -r MidBackControl ;
+select -tgl BackControl5 ;
+	orientConstraint -mo -weight 1;
+
+select -r MidBackControl ;
+select -tgl BackControl6 ;
+	orientConstraint -mo -weight 1;
+
+select -r UpperBackControl ;
+select -tgl BackControl6 ;
+	orientConstraint -mo -weight 1;
+
+select -r UpperBackControl ;
+select -tgl BackControl5 ;
+	orientConstraint -mo -weight 1;
+
+setAttr "BackControl6_orientConstraint1.UpperBackControlW1" 0.75;
+setAttr "BackControl6_orientConstraint1.MidBackControlW0" 0.25;
+setAttr "BackControl5_orientConstraint1.MidBackControlW0" 0.75;
+setAttr "BackControl5_orientConstraint1.UpperBackControlW1" 0.25;
+setAttr "BackControl3_orientConstraint1.LowerBackControlW0" 0.25;
+setAttr "BackControl3_orientConstraint1.MidBackControlW1" 0.75;
+setAttr "BackControl2_orientConstraint1.LowerBackControlW0" 0.75;
+setAttr "BackControl2_orientConstraint1.MidBackControlW1" 0.25;
+
+//set the Root Joint Control
+select -r rootControl ;
+select -tgl rootJoint ;
+	parentConstraint -mo -weight 1;
+
+// Constrain the hand controls to the Wrist Controls.
+// The theory is that the hand controls should follow the orientation of the wrist controls,
+// It would be nice if the hand controls were always flat to the camera. I'll do it later.
+
+select -cl  ;
+select -r leftHandControls ;
+select -tgl leftWristControl ;
+	parent;
+
+select -cl  ;
+select -r rightHandControls ;
+select -tgl rightWristControl ;
+	parent;
+
+
+
+
+//The Arms, Damn Arms (see Futurama)
+select -r leftShoulder.rotatePivot ;
+select -add leftForearm.rotatePivot ;
+ikHandle -s 0;
+select -r effector7 ;
+xform -ws -piv `getAttr leftWristLocator.tx` `getAttr leftWristLocator.ty` `getAttr leftWristLocator.tz`;
+
+select -r leftWristControl ;
+select -add ikHandle1 ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r leftWrist ;
+select -tgl leftWristControl ;
+	orientConstraint -mo -weight 1;
+
+select -cl  ;
+select -r leftElbowPoleVector ;
+select -add ikHandle1 ;
+	poleVectorConstraint -weight 1;
+
+select -cl  ;
+select -r leftElbowPoleVector ;
+group; xform -os -piv 0 0 0;
+rename "group1" "leftPoleVectorBuffer";
+
+select -cl  ;
+select -r rootControl ;
+select -add leftPoleVectorBuffer ;
+// MAintain offset on.
+//	parentConstraint -mo -weight 1;
+	pointConstraint -mo -weight 1;
+
+
+select -r rightShoulder.rotatePivot ;
+select -add rightForearm.rotatePivot ;
+ikHandle -s 0;
+select -r effector8;
+xform -ws -piv `getAttr rightWristLocator.tx` `getAttr rightWristLocator.ty` `getAttr rightWristLocator.tz`;
+
+select -r rightWristControl ;
+select -add ikHandle2 ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+select -r rightWrist ;
+select -tgl rightWristControl ;
+	orientConstraint -mo -weight 1;
+
+select -cl  ;
+select -r rightElbowPoleVector ;
+select -add ikHandle2 ;
+	poleVectorConstraint -weight 1;
+
+select -cl  ;
+select -r rightElbowPoleVector ;
+group; xform -os -piv 0 0 0;
+rename "group1" "rightPoleVectorBuffer";
+
+select -cl  ;
+select -r rootControl ;
+select -add rightPoleVectorBuffer ;
+	pointConstraint -mo -weight 1;
+	//parentConstraint -mo -weight 1;
+
+rename "ikHandle1" "leftArmIK";
+rename "ikHandle2" "rightArmIK";
+
+//head curve
+
+select -r headControlCurve ;
+select -tgl neck ;
+	orientConstraint -offset 0 0 0 -weight 1;
+
+select -cl  ;
+select -r neck ;
+select -tgl headControlCurve ;
+	pointConstraint -offset 0 0 0 -weight 1;
+
+//CollarBone Controls
+
+select -cl  ;
+select -r rightCollarBoneControl ;
+select -tgl leftCollarBoneControl ;
+	FreezeTransformations;
+	makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+
+select -cl  ;
+select -r rightCollarBoneControl ;
+	group; 
+	xform -os -piv 0 0 0;
+select -r leftCollarBoneControl ;
+	group; 
+	xform -os -piv 0 0 0;
+select -cl  ;
+select -r group1 ;
+	rename "group1" "rightCollarBoneBuffer";
+select -cl  ;
+select -r group2 ;
+	rename "group2" "leftCollarBoneBuffer";
+
+		connectAttr -f rightCollarBoneControl.rotateZ rightCollarBone.rotateZ;
+		connectAttr -f leftCollarBoneControl.rotateZ leftCollarBone.rotateZ;
+
+select -r leftCollarBone ;
+select -add leftCollarBoneBuffer ;
+	pointConstraint -mo -weight 1;
+
+select -r rightCollarBone ;
+select -add rightCollarBoneBuffer ;
+	pointConstraint -mo -weight 1;
+
+
+
+
+
+
+
+
+}
+
+
+proc lockDown()
+{
+//Wrist Lock Down
+
+	setAttr -lock true -keyable false "leftWristControl.rx";
+	setAttr -lock true -keyable false "leftWristControl.ry";
+	setAttr -lock true -keyable false "leftWristControl.rz";
+	setAttr -lock true -keyable false "leftWristControl.sx";
+	setAttr -lock true -keyable false "leftWristControl.sy";
+	setAttr -lock true -keyable false "leftWristControl.sz";
+	setAttr -lock true -keyable false "leftWristControl.v";
+		addAttr -ln IK_Blend -at double  -min 0 -max 1 -dv 1 |leftWristControl;
+		setAttr -e -keyable true |leftWristControl.IK_Blend;
+		addAttr -ln WristUpDown -at double  |leftWristControl;
+		setAttr -e -keyable true |leftWristControl.WristUpDown;
+		addAttr -ln WristSideToSide -at double  |leftWristControl;
+		setAttr -e -keyable true |leftWristControl.WristSideToSide;
+		addAttr -ln ForearmTwist -at double  |leftWristControl;
+		setAttr -e -keyable true |leftWristControl.ForearmTwist;
+
+	setAttr -lock true -keyable false "rightWristControl.rx";
+	setAttr -lock true -keyable false "rightWristControl.ry";
+	setAttr -lock true -keyable false "rightWristControl.rz";
+	setAttr -lock true -keyable false "rightWristControl.sx";
+	setAttr -lock true -keyable false "rightWristControl.sy";
+	setAttr -lock true -keyable false "rightWristControl.sz";
+	setAttr -lock true -keyable false "rightWristControl.v";
+		addAttr -ln IK_Blend -at double  -min 0 -max 1 -dv 1 |rightWristControl;
+		setAttr -e -keyable true |rightWristControl.IK_Blend;
+		addAttr -ln WristUpDown -at double  |rightWristControl;
+		setAttr -e -keyable true |rightWristControl.WristUpDown;
+		addAttr -ln WristSideToSide -at double  |rightWristControl;
+		setAttr -e -keyable true |rightWristControl.WristSideToSide;
+		addAttr -ln ForearmTwist -at double  |rightWristControl;
+		setAttr -e -keyable true |rightWristControl.ForearmTwist;
+
+connectAttr -f leftWristControl.IK_Blend leftArmIK.ikBlend;
+connectAttr -f leftWristControl.WristUpDown leftHand.rotateZ;
+connectAttr -f leftWristControl.WristSideToSide leftHand.rotateY;
+
+connectAttr -f rightWristControl.IK_Blend rightArmIK.ikBlend;
+connectAttr -f rightWristControl.WristUpDown rightHand.rotateZ;
+connectAttr -f rightWristControl.WristSideToSide rightHand.rotateY;
+
+expression -s "rightForearm.rotateX = rightWristControl.ForearmTwist;\r\nrightForearm1.rotateX = rightWristControl.ForearmTwist;\r\nleftForearm.rotateX = leftWristControl.ForearmTwist;\r\nleftForearm1.rotateX = leftWristControl.ForearmTwist;"  -o "" -n "ForearmTwistExp" -ae 1 -uc all ;
+
+
+//headCurve Lockdown
+setAttr -lock true -keyable false "headControlCurve.tx";
+setAttr -lock true -keyable false "headControlCurve.ty";
+setAttr -lock true -keyable false "headControlCurve.tz";
+setAttr -lock true -keyable false "headControlCurve.sx";
+setAttr -lock true -keyable false "headControlCurve.sy";
+setAttr -lock true -keyable false "headControlCurve.sz";
+setAttr -lock true -keyable false "headControlCurve.v";
+setAttr -lock true -keyable false "rightFootControl.sx";
+setAttr -lock true -keyable false "rightFootControl.sy";
+setAttr -lock true -keyable false "rightFootControl.sz";
+setAttr -lock true -keyable false "rightFootControl.v";
+setAttr -lock true -keyable false "leftFootControl.sx";
+setAttr -lock true -keyable false "leftFootControl.sy";
+setAttr -lock true -keyable false "leftFootControl.sz";
+setAttr -lock true -keyable false "leftFootControl.v";
+setAttr -lock true -keyable false "rootControl.sx";
+setAttr -lock true -keyable false "rootControl.sy";
+setAttr -lock true -keyable false "rootControl.sz";
+setAttr -lock true -keyable false "rootControl.v";
+setAttr -lock true -keyable false "LowerBackControl.tx";
+setAttr -lock true -keyable false "LowerBackControl.ty";
+setAttr -lock true -keyable false "LowerBackControl.tz";
+setAttr -lock true -keyable false "LowerBackControl.sx";
+setAttr -lock true -keyable false "LowerBackControl.sy";
+setAttr -lock true -keyable false "LowerBackControl.sz";
+setAttr -lock true -keyable false "LowerBackControl.v";
+setAttr -lock true -keyable false "MidBackControl.tx";
+setAttr -lock true -keyable false "MidBackControl.ty";
+setAttr -lock true -keyable false "MidBackControl.tz";
+setAttr -lock true -keyable false "MidBackControl.sx";
+setAttr -lock true -keyable false "MidBackControl.sy";
+setAttr -lock true -keyable false "MidBackControl.sz";
+setAttr -lock true -keyable false "MidBackControl.v";
+setAttr -lock true -keyable false "UpperBackControl.tx";
+setAttr -lock true -keyable false "UpperBackControl.ty";
+setAttr -lock true -keyable false "UpperBackControl.tz";
+setAttr -lock true -keyable false "UpperBackControl.sx";
+setAttr -lock true -keyable false "UpperBackControl.sy";
+setAttr -lock true -keyable false "UpperBackControl.sz";
+setAttr -lock true -keyable false "UpperBackControl.v";
+
+
+//The hands
+
+setAttr -lock true -keyable false "rightPalmCurve.tx";
+setAttr -lock true -keyable false "leftPinky.tx";
+setAttr -lock true -keyable false "leftRing.tx";
+setAttr -lock true -keyable false "leftMiddle.tx";
+setAttr -lock true -keyable false "leftIndex.tx";
+setAttr -lock true -keyable false "leftThumb.tx";
+setAttr -lock true -keyable false "leftPalmCurve.tx";
+setAttr -lock true -keyable false "rightPinky.tx";
+setAttr -lock true -keyable false "rightRing.tx";
+setAttr -lock true -keyable false "rightMiddle.tx";
+setAttr -lock true -keyable false "rightIndex.tx";
+setAttr -lock true -keyable false "rightThumb.tx";
+setAttr -lock true -keyable false "rightPalmCurve.ty";
+setAttr -lock true -keyable false "leftPinky.ty";
+setAttr -lock true -keyable false "leftRing.ty";
+setAttr -lock true -keyable false "leftMiddle.ty";
+setAttr -lock true -keyable false "leftIndex.ty";
+setAttr -lock true -keyable false "leftThumb.ty";
+setAttr -lock true -keyable false "leftPalmCurve.ty";
+setAttr -lock true -keyable false "rightPinky.ty";
+setAttr -lock true -keyable false "rightRing.ty";
+setAttr -lock true -keyable false "rightMiddle.ty";
+setAttr -lock true -keyable false "rightIndex.ty";
+setAttr -lock true -keyable false "rightThumb.ty";
+setAttr -lock true -keyable false "rightPalmCurve.tz";
+setAttr -lock true -keyable false "leftPinky.tz";
+setAttr -lock true -keyable false "leftRing.tz";
+setAttr -lock true -keyable false "leftMiddle.tz";
+setAttr -lock true -keyable false "leftIndex.tz";
+setAttr -lock true -keyable false "leftThumb.tz";
+setAttr -lock true -keyable false "leftPalmCurve.tz";
+setAttr -lock true -keyable false "rightPinky.tz";
+setAttr -lock true -keyable false "rightRing.tz";
+setAttr -lock true -keyable false "rightMiddle.tz";
+setAttr -lock true -keyable false "rightIndex.tz";
+setAttr -lock true -keyable false "rightThumb.tz";
+setAttr -lock true -keyable false "rightPalmCurve.rx";
+setAttr -lock true -keyable false "leftPinky.rx";
+setAttr -lock true -keyable false "leftRing.rx";
+setAttr -lock true -keyable false "leftMiddle.rx";
+setAttr -lock true -keyable false "leftIndex.rx";
+setAttr -lock true -keyable false "leftThumb.rx";
+setAttr -lock true -keyable false "leftPalmCurve.rx";
+setAttr -lock true -keyable false "rightPinky.rx";
+setAttr -lock true -keyable false "rightRing.rx";
+setAttr -lock true -keyable false "rightMiddle.rx";
+setAttr -lock true -keyable false "rightIndex.rx";
+setAttr -lock true -keyable false "rightThumb.rx";
+setAttr -lock true -keyable false "rightPalmCurve.ry";
+setAttr -lock true -keyable false "leftPinky.ry";
+setAttr -lock true -keyable false "leftRing.ry";
+setAttr -lock true -keyable false "leftMiddle.ry";
+setAttr -lock true -keyable false "leftIndex.ry";
+setAttr -lock true -keyable false "leftThumb.ry";
+setAttr -lock true -keyable false "leftPalmCurve.ry";
+setAttr -lock true -keyable false "rightPinky.ry";
+setAttr -lock true -keyable false "rightRing.ry";
+setAttr -lock true -keyable false "rightMiddle.ry";
+setAttr -lock true -keyable false "rightIndex.ry";
+setAttr -lock true -keyable false "rightThumb.ry";
+setAttr -lock true -keyable false "rightPalmCurve.rz";
+setAttr -lock true -keyable false "leftPinky.rz";
+setAttr -lock true -keyable false "leftRing.rz";
+setAttr -lock true -keyable false "leftMiddle.rz";
+setAttr -lock true -keyable false "leftIndex.rz";
+setAttr -lock true -keyable false "leftThumb.rz";
+setAttr -lock true -keyable false "leftPalmCurve.rz";
+setAttr -lock true -keyable false "rightPinky.rz";
+setAttr -lock true -keyable false "rightRing.rz";
+setAttr -lock true -keyable false "rightMiddle.rz";
+setAttr -lock true -keyable false "rightIndex.rz";
+setAttr -lock true -keyable false "rightThumb.rz";
+setAttr -lock true -keyable false "rightPalmCurve.sx";
+setAttr -lock true -keyable false "leftPinky.sx";
+setAttr -lock true -keyable false "leftRing.sx";
+setAttr -lock true -keyable false "leftMiddle.sx";
+setAttr -lock true -keyable false "leftIndex.sx";
+setAttr -lock true -keyable false "leftThumb.sx";
+setAttr -lock true -keyable false "leftPalmCurve.sx";
+setAttr -lock true -keyable false "rightPinky.sx";
+setAttr -lock true -keyable false "rightRing.sx";
+setAttr -lock true -keyable false "rightMiddle.sx";
+setAttr -lock true -keyable false "rightIndex.sx";
+setAttr -lock true -keyable false "rightThumb.sx";
+setAttr -lock true -keyable false "rightPalmCurve.sy";
+setAttr -lock true -keyable false "leftPinky.sy";
+setAttr -lock true -keyable false "leftRing.sy";
+setAttr -lock true -keyable false "leftMiddle.sy";
+setAttr -lock true -keyable false "leftIndex.sy";
+setAttr -lock true -keyable false "leftThumb.sy";
+setAttr -lock true -keyable false "leftPalmCurve.sy";
+setAttr -lock true -keyable false "rightPinky.sy";
+setAttr -lock true -keyable false "rightRing.sy";
+setAttr -lock true -keyable false "rightMiddle.sy";
+setAttr -lock true -keyable false "rightIndex.sy";
+setAttr -lock true -keyable false "rightThumb.sy";
+setAttr -lock true -keyable false "rightPalmCurve.sz";
+setAttr -lock true -keyable false "leftPinky.sz";
+setAttr -lock true -keyable false "leftRing.sz";
+setAttr -lock true -keyable false "leftMiddle.sz";
+setAttr -lock true -keyable false "leftIndex.sz";
+setAttr -lock true -keyable false "leftThumb.sz";
+setAttr -lock true -keyable false "leftPalmCurve.sz";
+setAttr -lock true -keyable false "rightPinky.sz";
+setAttr -lock true -keyable false "rightRing.sz";
+setAttr -lock true -keyable false "rightMiddle.sz";
+setAttr -lock true -keyable false "rightIndex.sz";
+setAttr -lock true -keyable false "rightThumb.sz";
+setAttr -lock true -keyable false "rightPalmCurve.v";
+setAttr -lock true -keyable false "leftPinky.v";
+setAttr -lock true -keyable false "leftRing.v";
+setAttr -lock true -keyable false "leftMiddle.v";
+setAttr -lock true -keyable false "leftIndex.v";
+setAttr -lock true -keyable false "leftThumb.v";
+setAttr -lock true -keyable false "leftPalmCurve.v";
+setAttr -lock true -keyable false "rightPinky.v";
+setAttr -lock true -keyable false "rightRing.v";
+setAttr -lock true -keyable false "rightMiddle.v";
+setAttr -lock true -keyable false "rightIndex.v";
+setAttr -lock true -keyable false "rightThumb.v";
+
+setAttr "leftPalmCurve.overrideEnabled" 1;
+setAttr leftPalmCurve.overrideDisplayType 1;
+
+setAttr "rightPalmCurve.overrideEnabled" 1;
+setAttr rightPalmCurve.overrideDisplayType 1;
+
+setAttr "BackControl6.visibility" 0;
+setAttr "BackControl2.visibility" 0;
+setAttr "BackControl3.visibility" 0;
+setAttr "BackControl5.visibility" 0;
+setAttr -lock true -keyable false "BackControl6.tx";
+setAttr -lock true -keyable false "BackControl2.tx";
+setAttr -lock true -keyable false "BackControl3.tx";
+setAttr -lock true -keyable false "BackControl5.tx";
+setAttr -lock true -keyable false "BackControl6.ty";
+setAttr -lock true -keyable false "BackControl2.ty";
+setAttr -lock true -keyable false "BackControl3.ty";
+setAttr -lock true -keyable false "BackControl5.ty";
+setAttr -lock true -keyable false "BackControl6.tz";
+setAttr -lock true -keyable false "BackControl2.tz";
+setAttr -lock true -keyable false "BackControl3.tz";
+setAttr -lock true -keyable false "BackControl5.tz";
+setAttr -lock true -keyable false "BackControl6.rx";
+setAttr -lock true -keyable false "BackControl2.rx";
+setAttr -lock true -keyable false "BackControl3.rx";
+setAttr -lock true -keyable false "BackControl5.rx";
+setAttr -lock true -keyable false "BackControl6.ry";
+setAttr -lock true -keyable false "BackControl2.ry";
+setAttr -lock true -keyable false "BackControl3.ry";
+setAttr -lock true -keyable false "BackControl5.ry";
+setAttr -lock true -keyable false "BackControl6.rz";
+setAttr -lock true -keyable false "BackControl2.rz";
+setAttr -lock true -keyable false "BackControl3.rz";
+setAttr -lock true -keyable false "BackControl5.rz";
+setAttr -lock true -keyable false "BackControl6.sx";
+setAttr -lock true -keyable false "BackControl2.sx";
+setAttr -lock true -keyable false "BackControl3.sx";
+setAttr -lock true -keyable false "BackControl5.sx";
+setAttr -lock true -keyable false "BackControl6.sy";
+setAttr -lock true -keyable false "BackControl2.sy";
+setAttr -lock true -keyable false "BackControl3.sy";
+setAttr -lock true -keyable false "BackControl5.sy";
+setAttr -lock true -keyable false "BackControl6.sz";
+setAttr -lock true -keyable false "BackControl2.sz";
+setAttr -lock true -keyable false "BackControl3.sz";
+setAttr -lock true -keyable false "BackControl5.sz";
+setAttr -lock true -keyable false "BackControl6.v";
+setAttr -lock true -keyable false "BackControl2.v";
+setAttr -lock true -keyable false "BackControl3.v";
+setAttr -lock true -keyable false "BackControl5.v";
+
+setAttr -lock true -keyable false "rightCollarBoneControl.tx";
+setAttr -lock true -keyable false "leftCollarBoneControl.tx";
+setAttr -lock true -keyable false "rightCollarBoneControl.ty";
+setAttr -lock true -keyable false "leftCollarBoneControl.ty";
+setAttr -lock true -keyable false "rightCollarBoneControl.tz";
+setAttr -lock true -keyable false "leftCollarBoneControl.tz";
+setAttr -lock true -keyable false "rightCollarBoneControl.rx";
+setAttr -lock true -keyable false "leftCollarBoneControl.rx";
+setAttr -lock true -keyable false "rightCollarBoneControl.ry";
+setAttr -lock true -keyable false "leftCollarBoneControl.ry";
+setAttr -lock true -keyable false "rightCollarBoneControl.sx";
+setAttr -lock true -keyable false "leftCollarBoneControl.sx";
+setAttr -lock true -keyable false "rightCollarBoneControl.sy";
+setAttr -lock true -keyable false "leftCollarBoneControl.sy";
+setAttr -lock true -keyable false "rightCollarBoneControl.sz";
+setAttr -lock true -keyable false "leftCollarBoneControl.sz";
+setAttr -lock true -keyable false "rightCollarBoneControl.v";
+setAttr -lock true -keyable false "leftCollarBoneControl.v";
+
+setAttr -lock true -keyable false "rightHandControls.tx";
+setAttr -lock true -keyable false "leftHandControls.tx";
+setAttr -lock true -keyable false "rightHandControls.ty";
+setAttr -lock true -keyable false "leftHandControls.ty";
+setAttr -lock true -keyable false "rightHandControls.tz";
+setAttr -lock true -keyable false "leftHandControls.tz";
+setAttr -lock true -keyable false "rightHandControls.rx";
+setAttr -lock true -keyable false "leftHandControls.rx";
+setAttr -lock true -keyable false "rightHandControls.ry";
+setAttr -lock true -keyable false "leftHandControls.ry";
+setAttr -lock true -keyable false "rightHandControls.rz";
+setAttr -lock true -keyable false "leftHandControls.rz";
+setAttr -lock true -keyable false "rightHandControls.sx";
+setAttr -lock true -keyable false "leftHandControls.sx";
+setAttr -lock true -keyable false "rightHandControls.sy";
+setAttr -lock true -keyable false "leftHandControls.sy";
+setAttr -lock true -keyable false "rightHandControls.sz";
+setAttr -lock true -keyable false "leftHandControls.sz";
+setAttr -lock true -keyable false "rightHandControls.v";
+setAttr -lock true -keyable false "leftHandControls.v";
+
+setAttr -lock true -keyable false "leftElbowPoleVector.rx";
+setAttr -lock true -keyable false "rightElbowPoleVector.rx";
+setAttr -lock true -keyable false "leftElbowPoleVector.ry";
+setAttr -lock true -keyable false "rightElbowPoleVector.ry";
+setAttr -lock true -keyable false "leftElbowPoleVector.rz";
+setAttr -lock true -keyable false "rightElbowPoleVector.rz";
+setAttr -lock true -keyable false "leftElbowPoleVector.sx";
+setAttr -lock true -keyable false "rightElbowPoleVector.sx";
+setAttr -lock true -keyable false "leftElbowPoleVector.sy";
+setAttr -lock true -keyable false "rightElbowPoleVector.sy";
+setAttr -lock true -keyable false "leftElbowPoleVector.sz";
+setAttr -lock true -keyable false "rightElbowPoleVector.sz";
+setAttr -lock true -keyable false "leftElbowPoleVector.v";
+setAttr -lock true -keyable false "rightElbowPoleVector.v";
+
+setAttr -lock true -keyable false "rightPoleVectorBuffer.tx";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.tx";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.ty";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.ty";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.tz";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.tz";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.rx";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.rx";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.ry";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.ry";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.rz";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.rz";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.sx";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.sx";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.sy";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.sy";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.sz";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.sz";
+setAttr -lock true -keyable false "rightPoleVectorBuffer.v";
+setAttr -lock true -keyable false "leftPoleVectorBuffer.v";
+
+select -r rightFootControl leftFootControl rootControl LowerBackControl MidBackControl UpperBackControl BackControl2 BackControl3 BackControl5 BackControl6 headControlCurve leftWristControl rightWristControl leftPoleVectorBuffer rightPoleVectorBuffer rightCollarBoneBuffer leftCollarBoneBuffer ;
+group; xform -os -piv 0 0 0;
+rename "group1" "globalGroup";
+
+curve -d 1 -p 0 0 -6 -p 2 0 -3 -p 1 0 -3 -p 1 0 -1 -p 3 0 -1 -p 3 0 -2 -p 6 0 0 -p 3 0 2 -p 3 0 1 -p 1 0 1 -p 1 0 3 -p 2 0 3 -p 0 0 6 -p -2 0 3 -p -1 0 3 -p -1 0 1 -p -3 0 1 -p -3 0 2 -p -6 0 0 -p -3 0 -2 -p -3 0 -1 -p -1 0 -1 -p -1 0 -3 -p -2 0 -3 -p 0 0 -6 -k 0 -k 1 -k 2 -k 3 -k 4 -k 5 -k 6 -k 7 -k 8 -k 9 -k 10 -k 11 -k 12 -k 13 -k 14 -k 15 -k 16 -k 17 -k 18 -k 19 -k 20 -k 21 -k 22 -k 23 -k 24 ;
+select -r curve1 ;
+scale -r 0.2 0.2 0.2;
+	FreezeTransformations;
+	makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+		rename "curve1" "globalControl";
+
+select -r globalGroup ;
+select -add globalControl ;
+	parent;
+
+setAttr -lock true -keyable false "globalControl.sx";
+setAttr -lock true -keyable false "globalControl.sy";
+setAttr -lock true -keyable false "globalControl.sz";
+setAttr -lock true -keyable false "globalControl.v";
+
+select -r rootJoint leftINVmain rightINVmain leftArmIK rightArmIK ;
+	group; 
+		xform -os -piv 0 0 0;
+		rename "group1" "notForKeying";
+
+select -r leftINVmain rightINVmain leftArmIK rightArmIK ;
+	HideSelectedObjects;
+
+select -r globalGroup ;
+	ungroup;
+
+select -r locatorGRP ;
+	delete;
+
+createDisplayLayer -name "SpinalColumn" -empty;
+createDisplayLayer -name "LeftSide" -empty;
+createDisplayLayer -name "RightSide" -empty;
+createDisplayLayer -name "Untouchable" -empty;
+
+setAttr "SpinalColumn.do" 1;
+setAttr "LeftSide.do" 2;
+setAttr "RightSide.do" 3;
+setAttr "Untouchable.do" 4;
+
+setAttr "SpinalColumn.c" 17;
+setAttr "LeftSide.c" 28;
+setAttr "RightSide.c" 13;
+setAttr "Untouchable.c" 8;
+
+setAttr Untouchable.displayType 2;
+
+select -r rootControl headControlCurve LowerBackControl MidBackControl UpperBackControl ;
+	string $sel[] = `ls -sl`;
+	string $current;
+		for ($current in $sel)
+		{
+		editDisplayLayerMembers SpinalColumn $current;
+		}
+
+select -r rightFootControl ;
+select -tgl rightWristControl ;
+select -tgl rightElbowPoleVector ;
+select -tgl rightCollarBoneControl ;
+
+	string $sel[] = `ls -sl`;
+	string $current;
+		for ($current in $sel)
+		{
+		editDisplayLayerMembers RightSide $current;
+		}
+
+select -r leftFootControl ;
+select -tgl leftWristControl ;
+select -tgl leftElbowPoleVector ;
+select -tgl leftCollarBoneControl ;
+
+	string $sel[] = `ls -sl`;
+	string $current;
+		for ($current in $sel)
+		{
+		editDisplayLayerMembers LeftSide $current;
+		}
+
+select -r leftINVmain rightINVmain leftArmIK rightArmIK BackControl2 BackControl3 BackControl5 BackControl6 ;
+
+	string $sel[] = `ls -sl`;
+	string $current;
+		for ($current in $sel)
+		{
+		editDisplayLayerMembers Untouchable $current;
+		}
+editDisplayLayerMembers SpinalColumn rootControl;
+		editDisplayLayerMembers Untouchable rightPalmCurve;
+		editDisplayLayerMembers Untouchable leftPalmCurve;
+
+select -r rightFootControl leftFootControl LowerBackControl MidBackControl UpperBackControl headControlCurve leftCollarBoneControl rightCollarBoneControl rightElbowPoleVector leftElbowPoleVector rootControl leftWristControl rightWristControl ;
+select -d globalControl ;
+character -name "character1";
+
+select -r globalControl ;
+FrameSelected;
+fitPanel -selected;
+
+setObjectPickMask "Joint" false;
+
+select -cl;
+
+}
+
+
+proc selectBindJointsproc()
+{
+select -r rootJoint rightHip rightKnee rightAnkle rightBall leftHip leftKnee leftAnkle leftBall back1 back2 back3 back4 back5 back6 back7 leftCollarBone leftShoulder leftElbow leftForearm leftForearm1 leftWrist leftHand leftPinkyCup leftPinkyKnuckle leftPinky1 leftPinky2 leftPalm leftRingKnuckle leftRing1 leftRing2 leftMiddleKnuckle leftMiddle1 leftMiddle2 leftIndexKnuckle leftIndex1 leftIndex2 leftThumbKnuckle leftThumb1 leftThumb2 rightCollarBone rightShoulder rightElbow rightForearm rightForearm1 rightWrist rightHand rightPinkyCup rightPinkyKnuckle rightPinky1 rightPinky2 rightThumbKnuckle rightThumb1 rightThumb2 rightPalm rightIndexKnuckle rightIndex1 rightIndex2 rightMiddleKnuckle rightMiddle1 rightMiddle2 neck rightRingKnuckle rightRing1 rightRing2 ;
+}
+
+proc goToBindPose()
+{
+setAttr "character1.rightFootControl_translateX" 0;
+setAttr "character1.rightFootControl_translateY" 0;
+setAttr "character1.rightFootControl_translateZ" 0;
+setAttr "character1.rightFootControl_rotateX" 0;
+setAttr "character1.rightFootControl_rotateY" 0;
+setAttr "character1.rightFootControl_rotateZ" 0;
+setAttr "character1.rightFootControl_HeelRotX" 0;
+setAttr "character1.rightFootControl_HeelRotY" 0;
+setAttr "character1.rightFootControl_HeelRotZ" 0;
+setAttr "character1.rightFootControl_BallRot" 0;
+setAttr "character1.rightFootControl_ToeRotX" 0;
+setAttr "character1.rightFootControl_ToeRotY" 0;
+setAttr "character1.rightFootControl_ToeRotZ" 0;
+setAttr "character1.leftFootControl_translateX" 0;
+setAttr "character1.leftFootControl_translateY" 0;
+setAttr "character1.leftFootControl_translateZ" 0;
+setAttr "character1.leftFootControl_rotateX" 0;
+setAttr "character1.leftFootControl_rotateY" 0;
+setAttr "character1.leftFootControl_rotateZ" 0;
+setAttr "character1.leftFootControl_HeelRotX" 0;
+setAttr "character1.leftFootControl_HeelRotY" 0;
+setAttr "character1.leftFootControl_HeelRotZ" 0;
+setAttr "character1.leftFootControl_BallRot" 0;
+setAttr "character1.leftFootControl_ToeRotX" 0;
+setAttr "character1.leftFootControl_ToeRotY" 0;
+setAttr "character1.leftFootControl_ToeRotZ" 0;
+setAttr "character1.LowerBackControl_rotateX" 0;
+setAttr "character1.LowerBackControl_rotateY" 0;
+setAttr "character1.LowerBackControl_rotateZ" 0;
+setAttr "character1.MidBackControl_rotateX" 0;
+setAttr "character1.MidBackControl_rotateY" 0;
+setAttr "character1.MidBackControl_rotateZ" 0;
+setAttr "character1.UpperBackControl_rotateX" 0;
+setAttr "character1.UpperBackControl_rotateY" 0;
+setAttr "character1.UpperBackControl_rotateZ" 0;
+setAttr "character1.headControlCurve_rotateX" 0;
+setAttr "character1.headControlCurve_rotateY" 0;
+setAttr "character1.headControlCurve_rotateZ" 0;
+setAttr "character1.leftCollarBoneControl_rotateZ" 0;
+setAttr "character1.rightCollarBoneControl_rotateZ" 0;
+setAttr "character1.rightElbowPoleVector_translateX" 0;
+setAttr "character1.rightElbowPoleVector_translateY" 0;
+setAttr "character1.rightElbowPoleVector_translateZ" 0;
+setAttr "character1.leftElbowPoleVector_translateX" 0;
+setAttr "character1.leftElbowPoleVector_translateY" 0;
+setAttr "character1.leftElbowPoleVector_translateZ" 0;
+setAttr "character1.rootControl_translateX" 0;
+setAttr "character1.rootControl_translateY" 0;
+setAttr "character1.rootControl_translateZ" 0;
+setAttr "character1.rootControl_rotateX" 0;
+setAttr "character1.rootControl_rotateY" 0;
+setAttr "character1.rootControl_rotateZ" 0;
+setAttr "character1.leftWristControl_translateX" 0;
+setAttr "character1.leftWristControl_translateY" 0;
+setAttr "character1.leftWristControl_translateZ" 0;
+setAttr "character1.leftWristControl_WristSideToSide" 0;
+setAttr "character1.leftWristControl_ForearmTwist" 0;
+setAttr "character1.rightWristControl_translateX" 0;
+setAttr "character1.rightWristControl_translateY" 0;
+setAttr "character1.rightWristControl_translateZ" 0;
+setAttr "character1.rightWristControl_WristUpDown" 0;
+setAttr "character1.rightWristControl_WristSideToSide" 0;
+setAttr "character1.rightWristControl_ForearmTwist" 0;
+setAttr "character1.rightWristControl_IK_Blend" 1;
+setAttr "character1.leftWristControl_IK_Blend" 1;
+
+
+
+
+}
+
+proc createFacialRig()
+{
+
+curve -d 1 -p -1 1 0 -p 1 1 0 -p 1 -1 0 -p -1 -1 0 -p -1 1 0 -k 0 -k 1 -k 2 -k 3 -k 4 ;
+
+circle -c 0 0 0 -nr 0 1 0 -sw 360 -r 1 -d 3 -ut 0 -tol 0.01 -s 8 -ch 1;
+setAttr "nurbsCircle1.rotateX" 90;
+setAttr "nurbsCircle1.scaleX" .15;
+setAttr "nurbsCircle1.scaleY" .15;
+setAttr "nurbsCircle1.scaleZ" .15;
+FreezeTransformations;
+makeIdentity -apply true -t 1 -r 1 -s 1 -n 0;
+transformLimits -tx -1 1 -etx 1 0 nurbsCircle1;
+transformLimits -ty -1 1 -ety 1 0 nurbsCircle1;
+transformLimits -tx -1 1 -etx 1 1 nurbsCircle1;
+transformLimits -ty -1 1 -ety 1 1 nurbsCircle1;
+select -r nurbsCircle1 ;
+select -add curve1 ;
+	parent;
+	DeleteHistory;
+
+rename "curve1" "limitBox_1";
+rename "nurbsCircle1" "target_1";
+setAttr -lock true -keyable false "target_1.tz";
+setAttr -lock true -keyable false "target_1.rx";
+setAttr -lock true -keyable false "target_1.ry";
+setAttr -lock true -keyable false "target_1.rz";
+setAttr -lock true -keyable false "target_1.sx";
+setAttr -lock true -keyable false "target_1.sy";
+setAttr -lock true -keyable false "target_1.sz";
+setAttr -lock true -keyable false "target_1.v";
+
+
+}
+
+
+
+
